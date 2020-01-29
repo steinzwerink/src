@@ -1,12 +1,14 @@
 #ifndef ROBOTWORLD_HPP_
 #define ROBOTWORLD_HPP_
 
-#include "Config.hpp"
 #include <vector>
+#include <string>
+#include "Config.hpp"
 #include "ModelObject.hpp"
 #include "Point.hpp"
 #include "Message.hpp"
 #include "MessageHandler.hpp"
+#include "Observer.hpp"
 
 namespace Model
 {
@@ -156,7 +158,7 @@ public:
 			 */
 	virtual std::string asString() const;
 
-	 std::string asCopyString() const;
+	std::string asCopyString() const;
 	/**
 			 * Returns a description of the object with all data of the object usable for debugging
 			 */
@@ -186,6 +188,13 @@ public:
 	{
 		return robotWorldPtr;
 	};
+	virtual void handleRequest(Messaging::Message &aMessage);
+	/**
+	 * This function is called by a ClientSession whenever a response to a previous request is received.
+	 *
+	 * @see Messaging::ResponseHandler::handleResponse( const Messaging::Message& aMessage)
+	 */
+	virtual void handleResponse(const Messaging::Message &aMessage);
 
 protected:
 	/**

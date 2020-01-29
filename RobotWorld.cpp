@@ -17,7 +17,7 @@ namespace Model
 /**
 	 *
 	 */
-/* static */ RobotWorld &RobotWorld::RobotWorld::getRobotWorld()
+/* static */ RobotWorld& RobotWorld::RobotWorld::getRobotWorld()
 {
 	static RobotWorld robotWorld;
 	return robotWorld;
@@ -416,6 +416,116 @@ void RobotWorld::unpopulate(const std::vector<Base::ObjectId> &aKeepObjects,
 /**
 	 *
 	 */
+
+	void Model::RobotWorld::handleRequest(Messaging::Message& aMessage) {
+	// switch (aMessage.getMessageType()) {
+	// case CopyWorldRequest: {
+	// 	Application::Logger::log(
+	// 			__PRETTY_FUNCTION__ + std::string(": CopyWorlds ")
+	// 					+ aMessage.getBody());
+	// 	//Read string and create objects.
+	// 	std::string myString = aMessage.getBody();
+	// 	aMessage.setMessageType(CopyWorldResponse);
+	// 	aMessage.setBody(this->asCopyString());
+	// 	fillWorld(myString);
+	// 	break;
+	// }
+	// case CopyRobots: {
+	// 	Application::Logger::log(
+	// 			__PRETTY_FUNCTION__ + std::string(": CopyRobots ")
+	// 					+ aMessage.getBody());
+
+	// 	std::stringstream ss;
+	// 	ss << aMessage.getBody();
+
+	// 	std::string aName;
+	// 	unsigned long x;
+	// 	unsigned long y;
+	// 	unsigned long lx;
+	// 	unsigned long ly;
+
+	// 	ss >> aName >> x >> y >> lx >> ly;
+
+	// 	Model::RobotPtr robot =
+	// 			(Model::RobotWorld::getRobotWorld().getRobots())[1];
+	// 	if (robot) {
+	// 		robot->setPosition(Point(x, y), true);
+	// 		robot->setFront(BoundedVector(lx, ly), true);
+	// 	};
+	// 	break;
+	// }
+
+	// case SyncWorlds: {
+	// 	Application::Logger::log(
+	// 			__PRETTY_FUNCTION__ + std::string(": SyncWorlds ")
+	// 					+ aMessage.getBody());
+	// 	std::string myString = aMessage.getBody();
+	// 	syncWorld(myString);
+	// 	aMessage.setMessageType(SyncWorlds);
+	// 	aMessage.setBody(asCopyString());
+
+	// 	break;
+	// }
+	// case StartRequest: {
+	// 	Application::Logger::log(
+	// 			__PRETTY_FUNCTION__ + std::string(": StartRequest"));
+	// 	Model::RobotPtr robot =
+	// 			(Model::RobotWorld::getRobotWorld().getRobots())[0];
+	// 	if (robot && !robot->isActing()) {
+	// 		robot->startActing();
+	// 	} else {
+	// 		robot->getRobotThread().join();
+	// 		std::thread newRobotThread([this, robot]
+	// 		{	robot->startDriving();});
+	// 		robot->getRobotThread().swap(newRobotThread);
+	// 	}
+	// 	aMessage.setMessageType(StartResponse);
+	// 	if (robot->isDriving()) {
+	// 		aMessage.setBody("Started remote robot.");
+	// 	} else {
+	// 		aMessage.setBody("Unable to start remote robot.");
+	// 	}
+	// 	break;
+	// }
+	// default:
+	// 	break;
+	// }
+}
+/**
+ *
+ */
+void Model::RobotWorld::handleResponse(const Messaging::Message& aMessage) {
+	// switch (aMessage.getMessageType()) {
+	// case CopyWorldResponse: {
+	// 	Application::Logger::log(
+	// 			__PRETTY_FUNCTION__ + std::string(": CopyWorlds ")
+	// 					+ aMessage.getBody());
+	// 	//Read string and create objects.
+	// 	std::string myString = aMessage.getBody();
+	// 	fillWorld(myString);
+	// 	break;
+	// }
+	// case SyncWorlds: {
+	// 	Application::Logger::log(
+	// 			__PRETTY_FUNCTION__ + std::string(": SyncWorlds")
+	// 					+ aMessage.getBody());
+	// 	std::string myString = aMessage.getBody();
+	// 	syncWorld(myString);
+	// 	break;
+	// }
+	// case StartResponse:
+	// 	Application::Logger::log(
+	// 			__PRETTY_FUNCTION__ + std::string(": started remote robot")
+	// 					+ aMessage.asString());
+	// 	break;
+	// default: {
+	// 	Application::Logger::log(
+	// 			__PRETTY_FUNCTION__ + std::string(": Unknown response type")
+	// 					+ aMessage.getBody());
+	// 	break;
+	// }
+	//}
+}
 std::string RobotWorld::asString() const
 {
 	return ModelObject::asString();
