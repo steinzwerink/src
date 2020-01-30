@@ -344,21 +344,50 @@ void Robot::handleNotification()
 /**
 	 *
 	 */
-void Robot::handleRequest(Messaging::Message &aMessage)
-{
-	switch (aMessage.getMessageType())
-	{
-	case EchoRequest:
-	{
-		Application::Logger::log(__PRETTY_FUNCTION__ + std::string(": EchoRequest"));
-
+void Robot::handleRequest(Messaging::Message& aMessage) {
+	switch (aMessage.getMessageType()) {
+	case EchoRequest: {
+		Application::Logger::log(
+				__PRETTY_FUNCTION__ + std::string(": EchoRequest"));
 		aMessage.setMessageType(EchoResponse);
 		aMessage.setBody(": case 1 " + aMessage.asString());
 		break;
 	}
-	default:
-	{
-		Application::Logger::log(__PRETTY_FUNCTION__ + std::string(": default"));
+	case Model::RobotWorld::CopyRobots: {
+		Application::Logger::log(
+				__PRETTY_FUNCTION__ + std::string(": CopyRobot ")
+						+ aMessage.getBody());
+		std::stringstream ss;
+		ss << aMessage.getBody();
+
+		std::string aName;
+		unsigned long x;
+		unsigned long y;
+		unsigned long lx;
+		unsigned long ly;
+
+		ss >> aName >> x >> y >> lx >> ly;
+
+		Model::RobotPtr robot =
+				Model::RobotWorld::getRobotWorld().getRobot(
+						(std::string(
+								Application::MainApplication::getArg(
+										"-worldname").value)));
+
+		if (robot) {
+			Application::Logger::log(robot->asString());
+			robot->setPosition(Point(x, y), true);
+			robot->setFront(BoundedVector(lx, ly), true);
+
+		} else {
+			Application::Logger::log("No robot has the name : " + aName);
+		}
+
+		break;
+	}
+	default: {
+		Application::Logger::log(
+				__PRETTY_FUNCTION__ + std::string(": default"));
 
 		aMessage.setBody(" default  Goodbye cruel world!");
 		break;
@@ -366,21 +395,22 @@ void Robot::handleRequest(Messaging::Message &aMessage)
 	}
 }
 /**
-	 *
-	 */
-void Robot::handleResponse(const Messaging::Message &aMessage)
-{
-	switch (aMessage.getMessageType())
-	{
-	case EchoResponse:
-	{
-		Application::Logger::log(__PRETTY_FUNCTION__ + std::string(": case EchoResponse: not implemented, ") + aMessage.asString());
+ *
+ */
+void Robot::handleResponse(const Messaging::Message& aMessage) {
+	switch (aMessage.getMessageType()) {
+	case EchoResponse: {
+		Application::Logger::log(
+				__PRETTY_FUNCTION__
+						+ std::string(": case EchoResponse: not implemented, ")
+						+ aMessage.asString());
 
 		break;
 	}
-	default:
-	{
-		Application::Logger::log(__PRETTY_FUNCTION__ + std::string(": default not implemented, ") + aMessage.asString());
+	default: {
+		Application::Logger::log(
+				__PRETTY_FUNCTION__ + std::string(": default not implemented, ")
+						+ aMessage.asString());
 		break;
 	}
 	}
