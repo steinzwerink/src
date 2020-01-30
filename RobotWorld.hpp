@@ -183,7 +183,7 @@ public:
 		Goal,
 		Wall
 	};
-
+	void fillWorld(std::string &messageBody);
 	RobotWorldPtr getRobotWorldPtr()
 	{
 		return robotWorldPtr;

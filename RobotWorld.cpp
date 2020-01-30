@@ -17,7 +17,7 @@ namespace Model
 /**
 	 *
 	 */
-/* static */ RobotWorld& RobotWorld::RobotWorld::getRobotWorld()
+/* static */ RobotWorld &RobotWorld::RobotWorld::getRobotWorld()
 {
 	static RobotWorld robotWorld;
 	return robotWorld;
@@ -417,19 +417,21 @@ void RobotWorld::unpopulate(const std::vector<Base::ObjectId> &aKeepObjects,
 	 *
 	 */
 
-	void Model::RobotWorld::handleRequest(Messaging::Message& aMessage) {
-	// switch (aMessage.getMessageType()) {
-	// case CopyWorldRequest: {
-	// 	Application::Logger::log(
-	// 			__PRETTY_FUNCTION__ + std::string(": CopyWorlds ")
-	// 					+ aMessage.getBody());
-	// 	//Read string and create objects.
-	// 	std::string myString = aMessage.getBody();
-	// 	aMessage.setMessageType(CopyWorldResponse);
-	// 	aMessage.setBody(this->asCopyString());
-	// 	fillWorld(myString);
-	// 	break;
-	// }
+void Model::RobotWorld::handleRequest(Messaging::Message &aMessage)
+{
+	switch (aMessage.getMessageType())
+	{
+	case CopyWorldRequest:
+	{
+		Application::Logger::log(
+			__PRETTY_FUNCTION__ + std::string(": CopyWorlds ") + aMessage.getBody());
+		//Read string and create objects.
+		std::string myString = aMessage.getBody();
+		aMessage.setMessageType(CopyWorldResponse);
+		aMessage.setBody(this->asCopyString());
+		fillWorld(myString);
+		break;
+	}
 	// case CopyRobots: {
 	// 	Application::Logger::log(
 	// 			__PRETTY_FUNCTION__ + std::string(": CopyRobots ")
@@ -487,24 +489,26 @@ void RobotWorld::unpopulate(const std::vector<Base::ObjectId> &aKeepObjects,
 	// 	}
 	// 	break;
 	// }
-	// default:
-	// 	break;
-	// }
+	default:
+		break;
+	}
 }
 /**
  *
  */
-void Model::RobotWorld::handleResponse(const Messaging::Message& aMessage) {
-	// switch (aMessage.getMessageType()) {
-	// case CopyWorldResponse: {
-	// 	Application::Logger::log(
-	// 			__PRETTY_FUNCTION__ + std::string(": CopyWorlds ")
-	// 					+ aMessage.getBody());
-	// 	//Read string and create objects.
-	// 	std::string myString = aMessage.getBody();
-	// 	fillWorld(myString);
-	// 	break;
-	// }
+void Model::RobotWorld::handleResponse(const Messaging::Message &aMessage)
+{
+	switch (aMessage.getMessageType())
+	{
+	case CopyWorldResponse:
+	{
+		Application::Logger::log(
+			__PRETTY_FUNCTION__ + std::string(": CopyWorlds ") + aMessage.getBody());
+		//Read string and create objects.
+		std::string myString = aMessage.getBody();
+		fillWorld(myString);
+		break;
+	}
 	// case SyncWorlds: {
 	// 	Application::Logger::log(
 	// 			__PRETTY_FUNCTION__ + std::string(": SyncWorlds")
@@ -518,13 +522,69 @@ void Model::RobotWorld::handleResponse(const Messaging::Message& aMessage) {
 	// 			__PRETTY_FUNCTION__ + std::string(": started remote robot")
 	// 					+ aMessage.asString());
 	// 	break;
-	// default: {
-	// 	Application::Logger::log(
-	// 			__PRETTY_FUNCTION__ + std::string(": Unknown response type")
-	// 					+ aMessage.getBody());
-	// 	break;
-	// }
-	//}
+	default:
+	{
+		Application::Logger::log(
+			__PRETTY_FUNCTION__ + std::string(": Unknown response type") + aMessage.getBody());
+		break;
+	}
+	}
+}
+
+void Model::RobotWorld::fillWorld(std::string &messageBody)
+{
+	Application::Logger::log(
+		__PRETTY_FUNCTION__ + std::string(": InputWorld") + messageBody);
+	std::vector<std::string> lines;
+	boost::split(lines, messageBody, boost::is_any_of("\n"));
+
+	for (std::string line : lines)
+	{
+		if (!line.empty())
+		{
+			std::stringstream ss;
+			std::string aNewName;
+			unsigned long aNewX;
+			unsigned long aNewY;
+			unsigned long aNewSecondX;
+			unsigned long aNewSecondY;
+
+			switch (std::stoi(&line.at(0)))
+			{
+			case Robot:
+				line.erase(line.begin());
+				ss << line;
+				ss >> aNewName >> aNewX >> aNewY;
+				newRobot((aNewName), Point(aNewX, aNewY));
+				break;
+			case WayPoint:
+				line.erase(line.begin());
+				ss << line;
+				ss >> aNewName >> aNewX >> aNewY;
+				newWayPoint(aNewName, Point(aNewX, aNewY), false);
+				break;
+			case Goal:
+				line.erase(line.begin());
+				ss << line;
+				ss >> aNewName >> aNewX >> aNewY;
+				newGoal(aNewName, Point(aNewX, aNewY), false);
+				break;
+			case Wall:
+				line.erase(line.begin());
+				ss << line;
+				ss >> aNewX >> aNewY >> aNewSecondX >> aNewSecondY;
+				newWall(Point(aNewX, aNewY), Point(aNewSecondX, aNewSecondY),
+						false);
+				break;
+			default:
+				Application::Logger::log("Unknown object");
+				Application::Logger::log(line);
+				break;
+			}
+		}
+	}
+	Application::Logger::log("Copied world");
+	notifyObservers();
 }
 std::string RobotWorld::asString() const
 {
