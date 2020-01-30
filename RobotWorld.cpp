@@ -432,30 +432,31 @@ void Model::RobotWorld::handleRequest(Messaging::Message &aMessage)
 		fillWorld(myString);
 		break;
 	}
-	// case CopyRobots: {
-	// 	Application::Logger::log(
-	// 			__PRETTY_FUNCTION__ + std::string(": CopyRobots ")
-	// 					+ aMessage.getBody());
+	case CopyRobots:
+	{
+		Application::Logger::log(
+			__PRETTY_FUNCTION__ + std::string(": CopyRobots ") + aMessage.getBody());
 
-	// 	std::stringstream ss;
-	// 	ss << aMessage.getBody();
+		std::stringstream ss;
+		ss << aMessage.getBody();
 
-	// 	std::string aName;
-	// 	unsigned long x;
-	// 	unsigned long y;
-	// 	unsigned long lx;
-	// 	unsigned long ly;
+		std::string aName;
+		unsigned long x;
+		unsigned long y;
+		unsigned long lx;
+		unsigned long ly;
 
-	// 	ss >> aName >> x >> y >> lx >> ly;
+		ss >> aName >> x >> y >> lx >> ly;
 
-	// 	Model::RobotPtr robot =
-	// 			(Model::RobotWorld::getRobotWorld().getRobots())[1];
-	// 	if (robot) {
-	// 		robot->setPosition(Point(x, y), true);
-	// 		robot->setFront(BoundedVector(lx, ly), true);
-	// 	};
-	// 	break;
-	// }
+		Model::RobotPtr robot =
+			(Model::RobotWorld::getRobotWorld().getRobots())[1];
+		if (robot)
+		{
+			robot->setPosition(Point(x, y), true);
+			robot->setFront(BoundedVector(lx, ly), true);
+		};
+		break;
+	}
 
 	// case SyncWorlds: {
 	// 	Application::Logger::log(
@@ -648,6 +649,7 @@ std::string RobotWorld::asDebugString() const
 	 *
 	 */
 RobotWorld::RobotWorld()
+	: communicating(false), robotWorldPtr(this)
 {
 }
 /**

@@ -195,8 +195,6 @@ public:
 	 * @see Messaging::ResponseHandler::handleResponse( const Messaging::Message& aMessage)
 	 */
 	virtual void handleResponse(const Messaging::Message &aMessage);
-
-protected:
 	/**
 			 *
 			 */
@@ -206,6 +204,7 @@ protected:
 			 */
 	virtual ~RobotWorld();
 
+protected:
 private:
 	/**
 			 * The vectors are mutable to allow for lazy instantiation
