@@ -290,11 +290,11 @@ Panel *MainFrameWindow::initialiseButtonPanel()
 			   GBPosition(1, 1),
 			   GBSpan(1, 1), EXPAND);
 
-	sizer->Add(makeButton(panel,
-						  "Start listening",
-						  [this](CommandEvent &anEvent) { this->OnStartListening(anEvent); }),
-			   GBPosition(2, 0),
-			   GBSpan(1, 1), EXPAND);
+	// sizer->Add(makeButton(panel,
+	// 					  "Start listening",
+	// 					  [this](CommandEvent &anEvent) { this->OnStartListening(anEvent); }),
+	// 		   GBPosition(2, 0),
+	// 		   GBSpan(1, 1), EXPAND);
 	sizer->Add(makeButton(panel,
 						  "Send message",
 						  [this](CommandEvent &anEvent) { this->OnSendMessage(anEvent); }),
@@ -413,7 +413,7 @@ void MainFrameWindow::OnCopyWorld(CommandEvent &UNUSEDPARAM(anEvent))
 			}
 			//Requests to sync the worlds.
 			Model::RobotPtr robot = Model::RobotWorld::getRobotWorld().getRobot("Robot");
-			 Messaging::Client client(remoteIpAdres, remotePort, worldptr);
+			Messaging::Client client(remoteIpAdres, remotePort, worldptr);
 			Messaging::Message message(
 				Model::RobotWorld::MessageType::CopyWorldRequest,
 				Model::RobotWorld::getRobotWorld().asCopyString());
@@ -444,6 +444,7 @@ void MainFrameWindow::OnSendMessage(CommandEvent &UNUSEDPARAM(anEvent))
 	Model::RobotPtr robot = Model::RobotWorld::getRobotWorld().getRobot("Robot");
 	if (robot)
 	{
+		robot->startCommunicating();
 		std::string remoteIpAdres = "localhost";
 		std::string remotePort = "12345";
 
