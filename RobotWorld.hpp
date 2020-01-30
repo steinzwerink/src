@@ -203,6 +203,19 @@ public:
 			 *
 			 */
 	virtual ~RobotWorld();
+	bool isCommunicating() const
+	{
+		return communicating;
+	}
+
+	void startCommunicating();
+	/**
+			 * Connects to the ServerConnection that listens at port 12345 unless given
+			 * an other port by specifying a command line argument -local_port=port
+			 * and sends a message with messageType "1" and a body with "stop"
+			 *
+			 */
+	void stopCommunicating();
 
 protected:
 private:

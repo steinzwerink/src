@@ -304,7 +304,14 @@ Panel *MainFrameWindow::initialiseButtonPanel()
 	sizer->Add(makeButton(panel, "Copy World",
 						  [this](CommandEvent &anEvent) { this->OnCopyWorld(anEvent); }),
 			   GBPosition(2, 2), GBSpan(1, 1), EXPAND);
+
 	sizer->Add(makeButton(panel,
+						  "Start listening",
+						  [this](CommandEvent &anEvent) { this->OnStartListeningWorld(anEvent); }),
+			   GBPosition(0, 1),
+			   GBSpan(1, 1), EXPAND);
+
+		sizer->Add(makeButton(panel,
 						  "Stop listening",
 						  [this](CommandEvent &anEvent) { this->OnStopListening(anEvent); }),
 			   GBPosition(2, 3),
@@ -413,7 +420,7 @@ void MainFrameWindow::OnCopyWorld(CommandEvent &UNUSEDPARAM(anEvent))
 				remotePort = MainApplication::getArg("-remote_port").value;
 			}
 			//Requests to sync the worlds.
-			Model::RobotPtr robot = Model::RobotWorld::getRobotWorld().getRobot("Robot");
+
 			Messaging::Client client(remoteIpAdres, remotePort, worldptr);
 			Messaging::Message message(
 				Model::RobotWorld::MessageType::CopyWorldRequest,
@@ -440,6 +447,19 @@ void MainFrameWindow::OnStartListening(CommandEvent &UNUSEDPARAM(anEvent))
 /**
 	 *
 	 */
+
+void MainFrameWindow::OnStartListeningWorld(CommandEvent &UNUSEDPARAM(anEvent))
+{
+	Model::RobotWorldPtr worldptr =
+		Model::RobotWorld::getRobotWorld().getRobotWorldPtr();
+	if (worldptr)
+	{
+		if (!worldptr->isCommunicating())
+		{
+			worldptr->startCommunicating();
+		}
+	}
+}
 void MainFrameWindow::OnSendMessage(CommandEvent &UNUSEDPARAM(anEvent))
 {
 	Model::RobotPtr robot = Model::RobotWorld::getRobotWorld().getRobot("Robot");

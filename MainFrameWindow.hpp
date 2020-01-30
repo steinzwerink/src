@@ -98,6 +98,7 @@ private:
 	void OnStartListening(CommandEvent &anEvent);
 	void OnSendMessage(CommandEvent &anEvent);
 	void OnCopyWorld(CommandEvent &anEvent);
+	void OnStartListeningWorld( CommandEvent& anEvent);
 	void OnStopListening(CommandEvent &anEvent);
 };
 //	class MainFrameWindow

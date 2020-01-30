@@ -620,6 +620,41 @@ std::string RobotWorld::asCopyString() const
 /**
  *
  */
+
+void Model::RobotWorld::startCommunicating() {
+	if (!communicating) {
+		communicating = true;
+
+		std::string localPort = "12345";
+		if (Application::MainApplication::isArgGiven("-local_port")) {
+			localPort =
+					Application::MainApplication::getArg("-local_port").value;
+		}
+
+		Messaging::CommunicationService::getCommunicationService().runRequestHandler(
+				toPtr<RobotWorld>(), std::stoi(localPort));
+		Application::Logger::log("Started listening for world");
+
+	}
+}
+
+void Model::RobotWorld::stopCommunicating() {
+	if (communicating) {
+		communicating = false;
+
+		std::string localPort = "12345";
+		if (Application::MainApplication::isArgGiven("-local_port")) {
+			localPort =
+					Application::MainApplication::getArg("-local_port").value;
+		}
+
+		Messaging::Client c1ient("localhost", localPort, toPtr<RobotWorld>());
+		Messaging::Message message(1, "stop");
+		c1ient.dispatchMessage(message);
+		Application::Logger::log("Stopped listening for world");
+	}
+}
+
 std::string RobotWorld::asDebugString() const
 {
 	std::ostringstream os;
