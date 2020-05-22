@@ -306,9 +306,9 @@ Panel *MainFrameWindow::initialiseButtonPanel()
 			   GBPosition(2, 2), GBSpan(1, 1), EXPAND);
 
 	sizer->Add(makeButton(panel,
-						  "Start listening",
+						  "Listen world",
 						  [this](CommandEvent &anEvent) { this->OnStartListeningWorld(anEvent); }),
-			   GBPosition(0, 1),
+			   GBPosition(0, 5),
 			   GBSpan(1, 1), EXPAND);
 
 		sizer->Add(makeButton(panel,
