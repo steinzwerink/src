@@ -108,7 +108,20 @@ void Robot::setSize(const Size &aSize,
 					bool aNotifyObservers /*= true*/)
 {
 	size = aSize;
-	collision_size = aSize;
+	if (aNotifyObservers == true)
+	{
+		notifyObservers();
+	}
+}
+/**
+	 *
+	 */
+void Robot::setCollisionSize(const Size &aSize,
+					bool aNotifyObservers /*= true*/)
+{
+
+	collision_size.x = aSize.x * 1.50;
+    collision_size.y = aSize.y * 1.50;
 	if (aNotifyObservers == true)
 	{
 		notifyObservers();
@@ -263,11 +276,25 @@ bool Robot::intersects(const Region &aRegion) const
 /**
 	 *
 	 */
-Point Robot::getFrontLeft() const
+	Point Robot::getFrontLeft() const
 {
 	// x and y are pointing to top left now
 	int x = position.x - (size.x / 2);
 	int y = position.y - (size.y / 2);
+
+	Point originalFrontLeft(x, y);
+	double angle = Utils::Shape2DUtils::getAngle(front) + 0.5 * Utils::PI;
+
+	Point frontLeft(static_cast<int>((originalFrontLeft.x - position.x) * std::cos(angle) - (originalFrontLeft.y - position.y) * std::sin(angle) + position.x),
+					static_cast<int>((originalFrontLeft.y - position.y) * std::cos(angle) + (originalFrontLeft.x - position.x) * std::sin(angle) + position.y));
+
+	return frontLeft;
+}
+Point Robot::getFrontLeft(Size aSize) const
+{
+	// x and y are pointing to top left now
+	int x = position.x - (aSize.x / 2);
+	int y = position.y - (aSize.y / 2);
 
 	Point originalFrontLeft(x, y);
 	double angle = Utils::Shape2DUtils::getAngle(front) + 0.5 * Utils::PI;
@@ -590,7 +617,7 @@ bool Robot::collision_walls()
 }
 bool Robot::collision_robot()
 {
-	Point frontLeft = getFrontLeft();
+	Point frontLeft = getFrontLeft(collision_size);
 	Point frontRight = getFrontRight();
 	Point backLeft = getBackLeft();
 	Point backRight = getBackRight();

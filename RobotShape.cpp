@@ -90,6 +90,7 @@ namespace View
 		if (getRobot()->getSize() != size)
 		{
 			getRobot()->setSize( size, false);
+			getRobot()->setCollisionSize( size, false);
 		}
 
 		PathAlgorithm::OpenSet openSet = getRobot()->getOpenSet();

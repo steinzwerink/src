@@ -75,6 +75,12 @@ public:
 			 */
 	void setSize(const Size &aSize,
 				 bool aNotifyObservers = true);
+
+	/**
+			 *
+			 */
+	void setCollisionSize(const Size &aSize,
+				 bool aNotifyObservers = true);
 	/**
 			 *
 			 */
@@ -168,7 +174,13 @@ public:
 	/**
 			 *
 			 */
+
 	Point getFrontLeft() const;
+	/**
+			 *
+			 */
+
+	Point getFrontLeft(Size aSize) const;
 	/**
 			 *
 			 */
@@ -236,7 +248,7 @@ public:
 	/**
 			 * Returns a description of the object with all data of the object usable for debugging
 			 */
-	 std::string asCopyString() const;
+	std::string asCopyString() const;
 	//@}
 
 	/**
@@ -276,6 +288,7 @@ protected:
 	bool collision_walls();
 
 	bool collision_robot();
+
 private:
 	std::string name;
 
