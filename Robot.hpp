@@ -271,8 +271,9 @@ protected:
 	/**
 			 *
 			 */
-	bool collision();
+	bool collision_walls();
 
+	bool collision_robot();
 private:
 	std::string name;
 

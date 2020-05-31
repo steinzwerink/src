@@ -189,7 +189,7 @@ void Robot::startDriving()
 	driving = true;
 
 	goal = RobotWorld::getRobotWorld().getGoal(this->name);
-	std::cout<<this->name<<std::endl;
+	std::cout << this->name << std::endl;
 	calculateRoute(goal);
 
 	drive();
@@ -345,50 +345,57 @@ void Robot::handleNotification()
 /**
 	 *
 	 */
-void Robot::handleRequest(Messaging::Message& aMessage) {
-	switch (aMessage.getMessageType()) {
-	case EchoRequest: {
+void Robot::handleRequest(Messaging::Message &aMessage)
+{
+	switch (aMessage.getMessageType())
+	{
+	case EchoRequest:
+	{
 		Application::Logger::log(
-				__PRETTY_FUNCTION__ + std::string(": EchoRequest"));
+			__PRETTY_FUNCTION__ + std::string(": EchoRequest"));
 		aMessage.setMessageType(EchoResponse);
 		aMessage.setBody(": case 1 " + aMessage.asString());
 		break;
 	}
-	case Model::RobotWorld::CopyRobots: {
+	// case CopyRobots:
+	// {
+	// 	Application::Logger::log(
+	// 		__PRETTY_FUNCTION__ + std::string(": CopyRobot ") + aMessage.getBody());
+	// 	std::stringstream ss;
+	// 	ss << aMessage.getBody();
+
+	// 	std::string aName;
+	// 	unsigned long x;
+	// 	unsigned long y;
+	// 	unsigned long lx;
+	// 	unsigned long ly;
+
+	// 	ss >> aName >> x >> y >> lx >> ly;
+
+	// 	Model::RobotPtr robot =
+	// 		Model::RobotWorld::getRobotWorld().getRobot(
+	// 			(std::string(
+	// 				Application::MainApplication::getArg(
+	// 					"-worldname")
+	// 					.value)));
+
+	// 	if (robot)
+	// 	{
+	// 		Application::Logger::log(robot->asString());
+	// 		robot->setPosition(Point(x, y), true);
+	// 		robot->setFront(BoundedVector(lx, ly), true);
+	// 	}
+	// 	else
+	// 	{
+	// 		Application::Logger::log("No robot has the name : " + aName);
+	// 	}
+
+	// 	break;
+	// }
+	default:
+	{
 		Application::Logger::log(
-				__PRETTY_FUNCTION__ + std::string(": CopyRobot ")
-						+ aMessage.getBody());
-		std::stringstream ss;
-		ss << aMessage.getBody();
-
-		std::string aName;
-		unsigned long x;
-		unsigned long y;
-		unsigned long lx;
-		unsigned long ly;
-
-		ss >> aName >> x >> y >> lx >> ly;
-
-		Model::RobotPtr robot =
-				Model::RobotWorld::getRobotWorld().getRobot(
-						(std::string(
-								Application::MainApplication::getArg(
-										"-worldname").value)));
-
-		if (robot) {
-			Application::Logger::log(robot->asString());
-			robot->setPosition(Point(x, y), true);
-			robot->setFront(BoundedVector(lx, ly), true);
-
-		} else {
-			Application::Logger::log("No robot has the name : " + aName);
-		}
-
-		break;
-	}
-	default: {
-		Application::Logger::log(
-				__PRETTY_FUNCTION__ + std::string(": default"));
+			__PRETTY_FUNCTION__ + std::string(": default"));
 
 		aMessage.setBody(" default  Goodbye cruel world!");
 		break;
@@ -398,20 +405,21 @@ void Robot::handleRequest(Messaging::Message& aMessage) {
 /**
  *
  */
-void Robot::handleResponse(const Messaging::Message& aMessage) {
-	switch (aMessage.getMessageType()) {
-	case EchoResponse: {
+void Robot::handleResponse(const Messaging::Message &aMessage)
+{
+	switch (aMessage.getMessageType())
+	{
+	case EchoResponse:
+	{
 		Application::Logger::log(
-				__PRETTY_FUNCTION__
-						+ std::string(": case EchoResponse: not implemented, ")
-						+ aMessage.asString());
+			__PRETTY_FUNCTION__ + std::string(": case EchoResponse: not implemented, ") + aMessage.asString());
 
 		break;
 	}
-	default: {
+	default:
+	{
 		Application::Logger::log(
-				__PRETTY_FUNCTION__ + std::string(": default not implemented, ")
-						+ aMessage.asString());
+			__PRETTY_FUNCTION__ + std::string(": default not implemented, ") + aMessage.asString());
 		break;
 	}
 	}
@@ -479,10 +487,21 @@ void Robot::drive()
 			front = BoundedVector(vertex.asPoint(), position);
 			position.x = vertex.x;
 			position.y = vertex.y;
-
-			if (arrived(goal) || collision())
+			if (collision_robot())
 			{
-				Application::Logger::log(__PRETTY_FUNCTION__ + std::string(": arrived or collision"));
+				Application::Logger::log(__PRETTY_FUNCTION__ + std::string(":collision with robot"));
+				notifyObservers();
+				break;
+			}
+			else if (collision_walls())
+			{
+				Application::Logger::log(__PRETTY_FUNCTION__ + std::string(":collision with wall"));
+				notifyObservers();
+				break;
+			}
+			else if (arrived(goal))
+			{
+				Application::Logger::log(__PRETTY_FUNCTION__ + std::string(": arrived"));
 				notifyObservers();
 				break;
 			}
@@ -545,7 +564,7 @@ bool Robot::arrived(GoalPtr aGoal)
 /**
 	 *
 	 */
-bool Robot::collision()
+bool Robot::collision_walls()
 {
 	Point frontLeft = getFrontLeft();
 	Point frontRight = getFrontRight();
@@ -558,6 +577,25 @@ bool Robot::collision()
 		if (Utils::Shape2DUtils::intersect(frontLeft, frontRight, wall->getPoint1(), wall->getPoint2()) ||
 			Utils::Shape2DUtils::intersect(frontLeft, backLeft, wall->getPoint1(), wall->getPoint2()) ||
 			Utils::Shape2DUtils::intersect(frontRight, backRight, wall->getPoint1(), wall->getPoint2()))
+		{
+			return true;
+		}
+	}
+	return false;
+}
+bool Robot::collision_robot()
+{
+	Point frontLeft = getFrontLeft();
+	Point frontRight = getFrontRight();
+	Point backLeft = getBackLeft();
+	Point backRight = getBackRight();
+
+	const std::vector<RobotPtr> &robots = RobotWorld::getRobotWorld().getRobots();
+	for (const auto &robot : robots)
+	{
+		if (Utils::Shape2DUtils::intersect(frontLeft, frontRight, robot->getFrontLeft(), robot->getFrontRight()) ||
+			Utils::Shape2DUtils::intersect(frontLeft, backLeft, robot->getFrontLeft(), robot->getBackLeft()) ||
+			Utils::Shape2DUtils::intersect(frontRight, backRight, robot->getFrontRight(), robot->getBackRight()))
 		{
 			return true;
 		}

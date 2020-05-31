@@ -474,38 +474,6 @@ void Model::RobotWorld::handleRequest(Messaging::Message &aMessage)
 		break;
 	}
 
-	// case SyncWorlds: {
-	// 	Application::Logger::log(
-	// 			__PRETTY_FUNCTION__ + std::string(": SyncWorlds ")
-	// 					+ aMessage.getBody());
-	// 	std::string myString = aMessage.getBody();
-	// 	syncWorld(myString);
-	// 	aMessage.setMessageType(SyncWorlds);
-	// 	aMessage.setBody(asCopyString());
-
-	// 	break;
-	// }
-	// case StartRequest: {
-	// 	Application::Logger::log(
-	// 			__PRETTY_FUNCTION__ + std::string(": StartRequest"));
-	// 	Model::RobotPtr robot =
-	// 			(Model::RobotWorld::getRobotWorld().getRobots())[0];
-	// 	if (robot && !robot->isActing()) {
-	// 		robot->startActing();
-	// 	} else {
-	// 		robot->getRobotThread().join();
-	// 		std::thread newRobotThread([this, robot]
-	// 		{	robot->startDriving();});
-	// 		robot->getRobotThread().swap(newRobotThread);
-	// 	}
-	// 	aMessage.setMessageType(StartResponse);
-	// 	if (robot->isDriving()) {
-	// 		aMessage.setBody("Started remote robot.");
-	// 	} else {
-	// 		aMessage.setBody("Unable to start remote robot.");
-	// 	}
-	// 	break;
-	// }
 	default:
 		break;
 	}
@@ -526,19 +494,7 @@ void Model::RobotWorld::handleResponse(const Messaging::Message &aMessage)
 		fillWorld(myString);
 		break;
 	}
-	// case SyncWorlds: {
-	// 	Application::Logger::log(
-	// 			__PRETTY_FUNCTION__ + std::string(": SyncWorlds")
-	// 					+ aMessage.getBody());
-	// 	std::string myString = aMessage.getBody();
-	// 	syncWorld(myString);
-	// 	break;
-	// }
-	// case StartResponse:
-	// 	Application::Logger::log(
-	// 			__PRETTY_FUNCTION__ + std::string(": started remote robot")
-	// 					+ aMessage.asString());
-	// 	break;
+
 	default:
 	{
 		Application::Logger::log(
