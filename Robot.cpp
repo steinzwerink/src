@@ -358,6 +358,14 @@ void Robot::handleRequest(Messaging::Message &aMessage)
 		aMessage.setBody(": case 1 " + aMessage.asString());
 		break;
 	}
+	case GetRobotRequest:
+	{
+		Application::Logger::log(
+			__PRETTY_FUNCTION__ + std::string(": EchoRequest"));
+		aMessage.setMessageType(GetRobotResponse);
+		aMessage.setBody(": case 2 " + aMessage.asString());
+		break;
+	}
 	// case Model::RobotWorld::CopyRobots: {
 	// 	Application::Logger::log(
 	// 			__PRETTY_FUNCTION__ + std::string(": CopyRobot ")
