@@ -313,7 +313,7 @@ void RobotWorld::populate(int aNumberOfWalls /*= 2*/)
 
 void RobotWorld::populateScenario_1_lhs(int aNumberOfWalls)
 {
-	RobotWorld::getRobotWorld().newRobot("Robot", Point(100, 100), false);
+	RobotWorld::getRobotWorld().newRobot("Stein", Point(100, 100), false);
 
 	static Point coordinates[] = {Point(0, 250), Point(200, 250), Point(200, 200), Point(200, 300),
 								  Point(600, 250), Point(300, 250), Point(300, 200), Point(300, 300)};
@@ -322,23 +322,17 @@ void RobotWorld::populateScenario_1_lhs(int aNumberOfWalls)
 	{
 		RobotWorld::getRobotWorld().newWall(coordinates[i], coordinates[i + 1], false);
 	}
-	RobotWorld::getRobotWorld().newGoal("Goal", Point(470, 470), false);
+	RobotWorld::getRobotWorld().newGoal("Stein", Point(470, 470), false);
 
 	notifyObservers();
 }
 
 void RobotWorld::populateScenario_1_rhs(int aNumberOfWalls)
 {
-	RobotWorld::getRobotWorld().newRobot("Robot", Point(100, 100), false);
+	RobotWorld::getRobotWorld().newRobot("Thomas", Point(100, 470), false);
 
-	static Point coordinates[] = {Point(0, 200), Point(300, 200), Point(200, 300), Point(600, 300),
-								  Point(0, 0), Point(0, 600), Point(0, 0), Point(600, 0), Point(500, 0), Point(500, 500)};
 
-	for (int i = 0; i < 2 * aNumberOfWalls; i += 2)
-	{
-		RobotWorld::getRobotWorld().newWall(coordinates[i], coordinates[i + 1], false);
-	}
-	RobotWorld::getRobotWorld().newGoal("Goal", Point(470, 470), false);
+	RobotWorld::getRobotWorld().newGoal("Thomas", Point(470, 100), false);
 
 	notifyObservers();
 }
