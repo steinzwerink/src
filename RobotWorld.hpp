@@ -132,7 +132,11 @@ public:
 	/**
 			 *
 			 */
-	void populateScenario_1(int aNumberOfWalls);
+	void populateScenario_1_lhs(int aNumberOfWalls);
+	/**
+			 *
+			 */
+	void populateScenario_1_rhs(int aNumberOfWalls);
 	/**
 			 *
 			 */

@@ -188,7 +188,8 @@ void Robot::startDriving()
 {
 	driving = true;
 
-	goal = RobotWorld::getRobotWorld().getGoal("Goal");
+	goal = RobotWorld::getRobotWorld().getGoal(this->name);
+	std::cout<<this->name<<std::endl;
 	calculateRoute(goal);
 
 	drive();

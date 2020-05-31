@@ -311,7 +311,7 @@ void RobotWorld::populate(int aNumberOfWalls /*= 2*/)
 	 *
 	 */
 
-void RobotWorld::populateScenario_1(int aNumberOfWalls)
+void RobotWorld::populateScenario_1_lhs(int aNumberOfWalls)
 {
 	RobotWorld::getRobotWorld().newRobot("Robot", Point(100, 100), false);
 
@@ -327,7 +327,7 @@ void RobotWorld::populateScenario_1(int aNumberOfWalls)
 	notifyObservers();
 }
 
-void RobotWorld::populateScenario_2(int aNumberOfWalls)
+void RobotWorld::populateScenario_1_rhs(int aNumberOfWalls)
 {
 	RobotWorld::getRobotWorld().newRobot("Robot", Point(100, 100), false);
 

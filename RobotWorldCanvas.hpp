@@ -168,7 +168,12 @@ public:
 	/**
 			 * Asks the world to populates itself with scenario_1
 			 */
-	void scenario_1(int aNumberOfWalls);
+	void scenario_1_lhs(int aNumberOfWalls);
+/**
+	/**
+			 * Asks the world to populates itself with scenario_1
+			 */
+	void scenario_1_rhs(int aNumberOfWalls);
 /**
 			 * Asks the world to populates itself with scenario_2
 			 */

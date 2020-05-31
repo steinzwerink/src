@@ -264,17 +264,17 @@ Panel *MainFrameWindow::initialiseButtonPanel()
 	// 		   GBPosition(0, 0),
 	// 		   GBSpan(1, 1), EXPAND);
 	sizer->Add(makeButton(panel,
-						  "Scenario_1",
-						  [this](CommandEvent &anEvent) { this->OnScenario_1(anEvent); }),
+						  "Scenario_1_lhs",
+						  [this](CommandEvent &anEvent) { this->scenario_1_lhs(anEvent); }),
 			   GBPosition(0, 0),
 			   GBSpan(1, 1), EXPAND);
 	sizer->Add(makeButton(panel,
-						  "Scenario_2",
-						  [this](CommandEvent &anEvent) { this->OnScenario_2(anEvent); }),
+						  "Scenario_1_rhs",
+						  [this](CommandEvent &anEvent) { this->scenario_1_rhs(anEvent); }),
 			   GBPosition(0, 1),
 			   GBSpan(1, 1), EXPAND);
 	sizer->Add(makeButton(panel,
-						  "Scenario_3",
+						  "Scenario_2",
 						  [this](CommandEvent &anEvent) { this->OnScenario_3(anEvent); }),
 			   GBPosition(0, 2),
 			   GBSpan(1, 1), EXPAND);
@@ -365,10 +365,14 @@ void MainFrameWindow::OnAbout(CommandEvent &UNUSEDPARAM(anEvent))
 void MainFrameWindow::OnStartRobot(CommandEvent &UNUSEDPARAM(anEvent))
 {
 	Logger::log("Attempting to start Robot...");
-	Model::RobotPtr robot = Model::RobotWorld::getRobotWorld().getRobot("Robot");
-	if (robot && !robot->isActing())
+
+	class std::vector<Model::RobotPtr> robots = Model::RobotWorld::getRobotWorld().getRobots();
+	for (const auto &robot : robots)
 	{
-		robot->startActing();
+		if (robot && !robot->isActing())
+		{
+			robot->startActing();
+		}
 	}
 }
 /**
@@ -377,10 +381,14 @@ void MainFrameWindow::OnStartRobot(CommandEvent &UNUSEDPARAM(anEvent))
 void MainFrameWindow::OnStopRobot(CommandEvent &UNUSEDPARAM(anEvent))
 {
 	Logger::log("Attempting to stop Robot...");
-	Model::RobotPtr robot = Model::RobotWorld::getRobotWorld().getRobot("Robot");
-	if (robot && robot->isActing())
+
+	class std::vector<Model::RobotPtr> robots = Model::RobotWorld::getRobotWorld().getRobots();
+	for (const auto &robot : robots)
 	{
-		robot->stopActing();
+		if (robot && !robot->isActing())
+		{
+			robot->stopActing();
+		}
 	}
 }
 /**
@@ -390,13 +398,13 @@ void MainFrameWindow::OnPopulate(CommandEvent &UNUSEDPARAM(anEvent))
 {
 	robotWorldCanvas->populate(2);
 }
-void MainFrameWindow::OnScenario_1(CommandEvent &UNUSEDPARAM(anEvent))
+void MainFrameWindow::scenario_1_lhs(CommandEvent &UNUSEDPARAM(anEvent))
 {
-	robotWorldCanvas->scenario_1(4);
+	robotWorldCanvas->scenario_1_lhs(4);
 }
-void MainFrameWindow::OnScenario_2(CommandEvent &UNUSEDPARAM(anEvent))
+void MainFrameWindow::scenario_1_rhs(CommandEvent &UNUSEDPARAM(anEvent))
 {
-	robotWorldCanvas->scenario_2(6);
+	robotWorldCanvas->scenario_1_rhs(6);
 }
 void MainFrameWindow::OnScenario_3(CommandEvent &UNUSEDPARAM(anEvent))
 {
