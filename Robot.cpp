@@ -108,6 +108,7 @@ void Robot::setSize(const Size &aSize,
 					bool aNotifyObservers /*= true*/)
 {
 	size = aSize;
+	collision_size = aSize;
 	if (aNotifyObservers == true)
 	{
 		notifyObservers();

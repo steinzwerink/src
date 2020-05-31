@@ -280,6 +280,7 @@ private:
 	std::string name;
 
 	Size size;
+	Size collision_size;
 	Point position;
 
 	BoundedVector front;
