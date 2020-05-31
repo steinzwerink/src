@@ -177,6 +177,11 @@ public:
 	/**
 			 * Removes everything from the world
 			 */
+	void scenario_3(int aNumberOfWalls);
+
+	/**
+			 * Removes everything from the world
+			 */
 	void unpopulate();
 
 protected:

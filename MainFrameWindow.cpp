@@ -266,11 +266,16 @@ Panel *MainFrameWindow::initialiseButtonPanel()
 	sizer->Add(makeButton(panel,
 						  "Scenario_1",
 						  [this](CommandEvent &anEvent) { this->OnScenario_1(anEvent); }),
-			   GBPosition(0, 1),
+			   GBPosition(0, 0),
 			   GBSpan(1, 1), EXPAND);
 	sizer->Add(makeButton(panel,
 						  "Scenario_2",
 						  [this](CommandEvent &anEvent) { this->OnScenario_2(anEvent); }),
+			   GBPosition(0, 1),
+			   GBSpan(1, 1), EXPAND);
+	sizer->Add(makeButton(panel,
+						  "Scenario_3",
+						  [this](CommandEvent &anEvent) { this->OnScenario_3(anEvent); }),
 			   GBPosition(0, 2),
 			   GBSpan(1, 1), EXPAND);
 	sizer->Add(makeButton(panel,
@@ -282,12 +287,12 @@ Panel *MainFrameWindow::initialiseButtonPanel()
 	sizer->Add(makeButton(panel,
 						  "Start robot",
 						  [this](CommandEvent &anEvent) { this->OnStartRobot(anEvent); }),
-			   GBPosition(1, 0),
+			   GBPosition(2, 0),
 			   GBSpan(1, 1), EXPAND);
 	sizer->Add(makeButton(panel,
 						  "Stop robot",
 						  [this](CommandEvent &anEvent) { this->OnStopRobot(anEvent); }),
-			   GBPosition(1, 1),
+			   GBPosition(2, 1),
 			   GBSpan(1, 1), EXPAND);
 
 	// sizer->Add(makeButton(panel,
@@ -303,19 +308,19 @@ Panel *MainFrameWindow::initialiseButtonPanel()
 
 	sizer->Add(makeButton(panel, "Copy World",
 						  [this](CommandEvent &anEvent) { this->OnCopyWorld(anEvent); }),
-			   GBPosition(2, 2), GBSpan(1, 1), EXPAND);
+			   GBPosition(1, 1), GBSpan(1, 1), EXPAND);
 
 	sizer->Add(makeButton(panel,
 						  "Listen world",
 						  [this](CommandEvent &anEvent) { this->OnStartListeningWorld(anEvent); }),
-			   GBPosition(0, 5),
+			   GBPosition(1, 0),
 			   GBSpan(1, 1), EXPAND);
 
-		// sizer->Add(makeButton(panel,
-		// 				  "Stop listening",
-		// 				  [this](CommandEvent &anEvent) { this->OnStopListening(anEvent); }),
-		// 	   GBPosition(2, 3),
-		// 	   GBSpan(1, 1), EXPAND);
+	// sizer->Add(makeButton(panel,
+	// 				  "Stop listening",
+	// 				  [this](CommandEvent &anEvent) { this->OnStopListening(anEvent); }),
+	// 	   GBPosition(2, 3),
+	// 	   GBSpan(1, 1), EXPAND);
 
 	panel->SetSizerAndFit(sizer);
 
@@ -392,6 +397,10 @@ void MainFrameWindow::OnScenario_1(CommandEvent &UNUSEDPARAM(anEvent))
 void MainFrameWindow::OnScenario_2(CommandEvent &UNUSEDPARAM(anEvent))
 {
 	robotWorldCanvas->scenario_2(6);
+}
+void MainFrameWindow::OnScenario_3(CommandEvent &UNUSEDPARAM(anEvent))
+{
+	robotWorldCanvas->scenario_3(6);
 }
 /**
 	 *

@@ -94,6 +94,7 @@ private:
 	void OnPopulate(CommandEvent &anEvent);
 	void OnScenario_1(CommandEvent &(anEvent));
 	void OnScenario_2(CommandEvent &(anEvent));
+	void OnScenario_3(CommandEvent &(anEvent));
 	void OnUnpopulate(CommandEvent &anEvent);
 	void OnStartListening(CommandEvent &anEvent);
 	void OnSendMessage(CommandEvent &anEvent);

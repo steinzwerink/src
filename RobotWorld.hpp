@@ -141,6 +141,10 @@ public:
 	/**
 			 *
 			 */
+	void populateScenario_3(int aNumberOfWalls);
+	/**
+			 *
+			 */
 	void unpopulate(bool aNotifyObservers = true);
 	/**
 			 *

@@ -473,6 +473,16 @@ void RobotWorldCanvas::scenario_2(int aNumberOfWalls /*= 2*/)
 /**
 	 *
 	 */
+
+void RobotWorldCanvas::scenario_3(int aNumberOfWalls /*= 2*/)
+{
+	Model::RobotWorld::getRobotWorld().populateScenario_3(aNumberOfWalls);
+}
+
+/**
+	 *
+	 */
+
 void RobotWorldCanvas::unpopulate()
 {
 	shapes.clear();

@@ -345,6 +345,22 @@ void RobotWorld::populateScenario_2(int aNumberOfWalls)
 /**
 	 *
 	 */
+
+void RobotWorld::populateScenario_3(int aNumberOfWalls)
+{
+	RobotWorld::getRobotWorld().newRobot("Robot", Point(100, 100), false);
+
+	static Point coordinates[] = {Point(0, 200), Point(300, 200), Point(200, 300), Point(600, 300),
+								  Point(0, 0), Point(0, 600), Point(0, 0), Point(600, 0), Point(500, 0), Point(500, 500)};
+
+	for (int i = 0; i < 2 * aNumberOfWalls; i += 2)
+	{
+		RobotWorld::getRobotWorld().newWall(coordinates[i], coordinates[i + 1], false);
+	}
+	RobotWorld::getRobotWorld().newGoal("Goal", Point(470, 470), false);
+
+	notifyObservers();
+}
 void RobotWorld::unpopulate(bool aNotifyObservers /*= true*/)
 {
 	robots.clear();
