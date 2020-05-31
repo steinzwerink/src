@@ -434,7 +434,6 @@ void MainFrameWindow::OnCopyWorld(CommandEvent &UNUSEDPARAM(anEvent))
 			Model::RobotWorld::getRobotWorld().getRobotWorldPtr();
 		if (worldptr)
 		{
-			std::cout << " hoi" << std::endl;
 			std::string remoteIpAdres = "localhost";
 			std::string remotePort = "12345";
 
