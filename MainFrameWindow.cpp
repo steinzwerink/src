@@ -258,11 +258,11 @@ Panel *MainFrameWindow::initialiseButtonPanel()
 
 	GridBagSizer *sizer = new GridBagSizer();
 
-	sizer->Add(makeButton(panel,
-						  "Populate",
-						  [this](CommandEvent &anEvent) { this->OnPopulate(anEvent); }),
-			   GBPosition(0, 0),
-			   GBSpan(1, 1), EXPAND);
+	// sizer->Add(makeButton(panel,
+	// 					  "Populate",
+	// 					  [this](CommandEvent &anEvent) { this->OnPopulate(anEvent); }),
+	// 		   GBPosition(0, 0),
+	// 		   GBSpan(1, 1), EXPAND);
 	sizer->Add(makeButton(panel,
 						  "Scenario_1",
 						  [this](CommandEvent &anEvent) { this->OnScenario_1(anEvent); }),
@@ -290,16 +290,16 @@ Panel *MainFrameWindow::initialiseButtonPanel()
 			   GBPosition(1, 1),
 			   GBSpan(1, 1), EXPAND);
 
-	sizer->Add(makeButton(panel,
-						  "Start listening",
-						  [this](CommandEvent &anEvent) { this->OnStartListening(anEvent); }),
-			   GBPosition(2, 0),
-			   GBSpan(1, 1), EXPAND);
-	sizer->Add(makeButton(panel,
-						  "Send message",
-						  [this](CommandEvent &anEvent) { this->OnSendMessage(anEvent); }),
-			   GBPosition(2, 1),
-			   GBSpan(1, 1), EXPAND);
+	// sizer->Add(makeButton(panel,
+	// 					  "Start listening",
+	// 					  [this](CommandEvent &anEvent) { this->OnStartListening(anEvent); }),
+	// 		   GBPosition(2, 0),
+	// 		   GBSpan(1, 1), EXPAND);
+	// sizer->Add(makeButton(panel,
+	// 					  "Send message",
+	// 					  [this](CommandEvent &anEvent) { this->OnSendMessage(anEvent); }),
+	// 		   GBPosition(2, 1),
+	// 		   GBSpan(1, 1), EXPAND);
 
 	sizer->Add(makeButton(panel, "Copy World",
 						  [this](CommandEvent &anEvent) { this->OnCopyWorld(anEvent); }),
@@ -311,11 +311,11 @@ Panel *MainFrameWindow::initialiseButtonPanel()
 			   GBPosition(0, 5),
 			   GBSpan(1, 1), EXPAND);
 
-		sizer->Add(makeButton(panel,
-						  "Stop listening",
-						  [this](CommandEvent &anEvent) { this->OnStopListening(anEvent); }),
-			   GBPosition(2, 3),
-			   GBSpan(1, 1), EXPAND);
+		// sizer->Add(makeButton(panel,
+		// 				  "Stop listening",
+		// 				  [this](CommandEvent &anEvent) { this->OnStopListening(anEvent); }),
+		// 	   GBPosition(2, 3),
+		// 	   GBSpan(1, 1), EXPAND);
 
 	panel->SetSizerAndFit(sizer);
 
