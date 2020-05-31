@@ -331,7 +331,6 @@ void RobotWorld::populateScenario_1_rhs(int aNumberOfWalls)
 {
 	RobotWorld::getRobotWorld().newRobot("Thomas", Point(100, 470), false);
 
-
 	RobotWorld::getRobotWorld().newGoal("Thomas", Point(470, 100), false);
 
 	notifyObservers();
@@ -339,10 +338,9 @@ void RobotWorld::populateScenario_1_rhs(int aNumberOfWalls)
 /**
 	 *
 	 */
-
-void RobotWorld::populateScenario_3(int aNumberOfWalls)
+void RobotWorld::populateScenario_2_lhs(int aNumberOfWalls)
 {
-	RobotWorld::getRobotWorld().newRobot("Robot", Point(100, 100), false);
+	RobotWorld::getRobotWorld().newRobot("Stein", Point(100, 100), false);
 
 	static Point coordinates[] = {Point(0, 200), Point(300, 200), Point(200, 300), Point(600, 300),
 								  Point(0, 0), Point(0, 600), Point(0, 0), Point(600, 0), Point(500, 0), Point(500, 500)};
@@ -351,7 +349,15 @@ void RobotWorld::populateScenario_3(int aNumberOfWalls)
 	{
 		RobotWorld::getRobotWorld().newWall(coordinates[i], coordinates[i + 1], false);
 	}
-	RobotWorld::getRobotWorld().newGoal("Goal", Point(470, 470), false);
+	RobotWorld::getRobotWorld().newGoal("Stein", Point(470, 470), false);
+
+	notifyObservers();
+}
+void RobotWorld::populateScenario_2_rhs(int aNumberOfWalls)
+{
+	RobotWorld::getRobotWorld().newRobot("Thomas", Point(100, 470), false);
+
+	RobotWorld::getRobotWorld().newGoal("Thomas", Point(470, 100), false);
 
 	notifyObservers();
 }
@@ -631,31 +637,36 @@ std::string RobotWorld::asCopyString() const
  *
  */
 
-void Model::RobotWorld::startCommunicating() {
-	if (!communicating) {
+void Model::RobotWorld::startCommunicating()
+{
+	if (!communicating)
+	{
 		communicating = true;
 
 		std::string localPort = "12345";
-		if (Application::MainApplication::isArgGiven("-local_port")) {
+		if (Application::MainApplication::isArgGiven("-local_port"))
+		{
 			localPort =
-					Application::MainApplication::getArg("-local_port").value;
+				Application::MainApplication::getArg("-local_port").value;
 		}
 
 		Messaging::CommunicationService::getCommunicationService().runRequestHandler(
-				toPtr<RobotWorld>(), std::stoi(localPort));
+			toPtr<RobotWorld>(), std::stoi(localPort));
 		Application::Logger::log("Started listening for world");
-
 	}
 }
 
-void Model::RobotWorld::stopCommunicating() {
-	if (communicating) {
+void Model::RobotWorld::stopCommunicating()
+{
+	if (communicating)
+	{
 		communicating = false;
 
 		std::string localPort = "12345";
-		if (Application::MainApplication::isArgGiven("-local_port")) {
+		if (Application::MainApplication::isArgGiven("-local_port"))
+		{
 			localPort =
-					Application::MainApplication::getArg("-local_port").value;
+				Application::MainApplication::getArg("-local_port").value;
 		}
 
 		Messaging::Client c1ient("localhost", localPort, toPtr<RobotWorld>());

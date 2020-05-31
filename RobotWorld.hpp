@@ -141,11 +141,11 @@ public:
 			 *
 			 */
 
-	void populateScenario_2(int aNumberOfWalls);
+	void populateScenario_2_lhs(int aNumberOfWalls);
 	/**
 			 *
 			 */
-	void populateScenario_3(int aNumberOfWalls);
+	void populateScenario_2_rhs(int aNumberOfWalls);
 	/**
 			 *
 			 */

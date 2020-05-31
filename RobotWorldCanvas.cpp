@@ -470,13 +470,17 @@ void RobotWorldCanvas::scenario_1_rhs(int aNumberOfWalls /*= 2*/)
 	Model::RobotWorld::getRobotWorld().populateScenario_1_rhs(aNumberOfWalls);
 }
 
+void RobotWorldCanvas::scenario_2_lhs(int aNumberOfWalls /*= 2*/)
+{
+	Model::RobotWorld::getRobotWorld().populateScenario_2_lhs(aNumberOfWalls);
+}
 /**
 	 *
 	 */
 
-void RobotWorldCanvas::scenario_3(int aNumberOfWalls /*= 2*/)
+void RobotWorldCanvas::scenario_2_rhs(int aNumberOfWalls /*= 2*/)
 {
-	Model::RobotWorld::getRobotWorld().populateScenario_3(aNumberOfWalls);
+	Model::RobotWorld::getRobotWorld().populateScenario_2_rhs(aNumberOfWalls);
 }
 
 /**

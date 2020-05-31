@@ -177,12 +177,12 @@ public:
 /**
 			 * Asks the world to populates itself with scenario_2
 			 */
-	void scenario_2(int aNumberOfWalls);
+	void scenario_2_lhs(int aNumberOfWalls);
 
 	/**
 			 * Removes everything from the world
 			 */
-	void scenario_3(int aNumberOfWalls);
+	void scenario_2_rhs(int aNumberOfWalls);
 
 	/**
 			 * Removes everything from the world

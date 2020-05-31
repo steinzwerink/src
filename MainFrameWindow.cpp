@@ -274,14 +274,19 @@ Panel *MainFrameWindow::initialiseButtonPanel()
 			   GBPosition(0, 1),
 			   GBSpan(1, 1), EXPAND);
 	sizer->Add(makeButton(panel,
-						  "Scenario_2",
-						  [this](CommandEvent &anEvent) { this->OnScenario_3(anEvent); }),
+						  "Scenario_2_lhs",
+						  [this](CommandEvent &anEvent) { this->scenario_2_lhs(anEvent); }),
 			   GBPosition(0, 2),
+			   GBSpan(1, 1), EXPAND);
+	sizer->Add(makeButton(panel,
+						  "Scenario_2_rhs",
+						  [this](CommandEvent &anEvent) { this->scenario_2_rhs(anEvent); }),
+			   GBPosition(0, 3),
 			   GBSpan(1, 1), EXPAND);
 	sizer->Add(makeButton(panel,
 						  "Unpopulate",
 						  [this](CommandEvent &anEvent) { this->OnUnpopulate(anEvent); }),
-			   GBPosition(0, 3),
+			   GBPosition(1, 2),
 			   GBSpan(1, 1), EXPAND);
 
 	sizer->Add(makeButton(panel,
@@ -295,17 +300,6 @@ Panel *MainFrameWindow::initialiseButtonPanel()
 			   GBPosition(2, 1),
 			   GBSpan(1, 1), EXPAND);
 
-	// sizer->Add(makeButton(panel,
-	// 					  "Start listening",
-	// 					  [this](CommandEvent &anEvent) { this->OnStartListening(anEvent); }),
-	// 		   GBPosition(2, 0),
-	// 		   GBSpan(1, 1), EXPAND);
-	// sizer->Add(makeButton(panel,
-	// 					  "Send message",
-	// 					  [this](CommandEvent &anEvent) { this->OnSendMessage(anEvent); }),
-	// 		   GBPosition(2, 1),
-	// 		   GBSpan(1, 1), EXPAND);
-
 	sizer->Add(makeButton(panel, "Copy World",
 						  [this](CommandEvent &anEvent) { this->OnCopyWorld(anEvent); }),
 			   GBPosition(1, 1), GBSpan(1, 1), EXPAND);
@@ -315,12 +309,6 @@ Panel *MainFrameWindow::initialiseButtonPanel()
 						  [this](CommandEvent &anEvent) { this->OnStartListeningWorld(anEvent); }),
 			   GBPosition(1, 0),
 			   GBSpan(1, 1), EXPAND);
-
-	// sizer->Add(makeButton(panel,
-	// 				  "Stop listening",
-	// 				  [this](CommandEvent &anEvent) { this->OnStopListening(anEvent); }),
-	// 	   GBPosition(2, 3),
-	// 	   GBSpan(1, 1), EXPAND);
 
 	panel->SetSizerAndFit(sizer);
 
@@ -406,9 +394,13 @@ void MainFrameWindow::scenario_1_rhs(CommandEvent &UNUSEDPARAM(anEvent))
 {
 	robotWorldCanvas->scenario_1_rhs(6);
 }
-void MainFrameWindow::OnScenario_3(CommandEvent &UNUSEDPARAM(anEvent))
+void MainFrameWindow::scenario_2_lhs(CommandEvent &UNUSEDPARAM(anEvent))
 {
-	robotWorldCanvas->scenario_3(6);
+	robotWorldCanvas->scenario_2_lhs(6);
+}
+void MainFrameWindow::scenario_2_rhs(CommandEvent &UNUSEDPARAM(anEvent))
+{
+	robotWorldCanvas->scenario_2_rhs(6);
 }
 /**
 	 *
