@@ -331,7 +331,7 @@ void RobotWorld::populateScenario_1_rhs(int aNumberOfWalls)
 {
 	RobotWorld::getRobotWorld().newRobot("Thomas", Point(100, 470), false);
 
-
+ 
 	RobotWorld::getRobotWorld().newGoal("Thomas", Point(470, 100), false);
 
 	notifyObservers();
