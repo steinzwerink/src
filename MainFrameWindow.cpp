@@ -360,9 +360,27 @@ void MainFrameWindow::OnStartRobot(CommandEvent &UNUSEDPARAM(anEvent))
 		if (robot && !robot->isActing())
 		{
 			robot->startActing();
+
+			if (copied)
+			{
+				Model::RobotPtr steinrobot = Model::RobotWorld::getRobotWorld().getRobot("Stein");
+
+				if (steinrobot)
+				{
+
+					// We will request an echo message. The response will be "Hello World", if all goes OK,
+					// "Goodbye cruel world!" if something went wrong.
+					Messaging::Client c1ient(remoteIpAdres,
+											 remotePort,
+											 steinrobot);
+					Messaging::Message message(Model::Robot::MessageType::GetRobotRequest, "Hello world!");
+					c1ient.dispatchMessage(message);
+				}
+			}
 		}
 	}
 }
+
 /**
 	 *
 	 */
@@ -476,8 +494,8 @@ void MainFrameWindow::OnSendMessage(CommandEvent &UNUSEDPARAM(anEvent))
 	if (robot)
 	{
 
-		std::string remoteIpAdres = "localhost";
-		std::string remotePort = "12345";
+		remoteIpAdres = "localhost";
+		remotePort = "12345";
 
 		if (MainApplication::isArgGiven("-remote_ip"))
 		{

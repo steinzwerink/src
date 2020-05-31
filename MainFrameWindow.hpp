@@ -84,6 +84,9 @@ private:
 	bool copied = false;
 	Base::DebugTraceFunction *debugTraceFunction;
 
+	std::string remoteIpAdres = "";
+		std::string remotePort = "";
+
 	void OnQuit(CommandEvent &anEvent);
 	void OnWidgetDebugTraceFunction(CommandEvent &anEvent);
 	void OnStdOutDebugTraceFunction(CommandEvent &anEvent);

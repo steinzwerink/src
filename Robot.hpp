@@ -252,7 +252,9 @@ public:
 	enum MessageType
 	{
 		EchoRequest,
-		EchoResponse
+		EchoResponse,
+		GetRobotRequest,
+		GetRobotResponse
 	};
 
 protected:

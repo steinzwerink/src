@@ -357,10 +357,10 @@ void Robot::handleRequest(Messaging::Message &aMessage)
 		aMessage.setBody(": case 1 " + aMessage.asString());
 		break;
 	}
-	// case CopyRobots:
-	// {
+	// case Model::RobotWorld::CopyRobots: {
 	// 	Application::Logger::log(
-	// 		__PRETTY_FUNCTION__ + std::string(": CopyRobot ") + aMessage.getBody());
+	// 			__PRETTY_FUNCTION__ + std::string(": CopyRobot ")
+	// 					+ aMessage.getBody());
 	// 	std::stringstream ss;
 	// 	ss << aMessage.getBody();
 
@@ -373,20 +373,17 @@ void Robot::handleRequest(Messaging::Message &aMessage)
 	// 	ss >> aName >> x >> y >> lx >> ly;
 
 	// 	Model::RobotPtr robot =
-	// 		Model::RobotWorld::getRobotWorld().getRobot(
-	// 			(std::string(
-	// 				Application::MainApplication::getArg(
-	// 					"-worldname")
-	// 					.value)));
+	// 			Model::RobotWorld::getRobotWorld().getRobot(
+	// 					(std::string(
+	// 							Application::MainApplication::getArg(
+	// 									"-worldname").value)));
 
-	// 	if (robot)
-	// 	{
+	// 	if (robot) {
 	// 		Application::Logger::log(robot->asString());
 	// 		robot->setPosition(Point(x, y), true);
 	// 		robot->setFront(BoundedVector(lx, ly), true);
-	// 	}
-	// 	else
-	// 	{
+
+	// 	} else {
 	// 		Application::Logger::log("No robot has the name : " + aName);
 	// 	}
 
@@ -413,6 +410,13 @@ void Robot::handleResponse(const Messaging::Message &aMessage)
 	{
 		Application::Logger::log(
 			__PRETTY_FUNCTION__ + std::string(": case EchoResponse: not implemented, ") + aMessage.asString());
+
+		break;
+	}
+	case GetRobotResponse:
+	{
+		Application::Logger::log(
+			__PRETTY_FUNCTION__ + std::string("je hebt de positie van de robot binnen ") + aMessage.asString());
 
 		break;
 	}
