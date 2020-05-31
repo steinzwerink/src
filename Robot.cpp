@@ -388,7 +388,7 @@ void Robot::handleRequest(Messaging::Message &aMessage)
 	case GetRobotRequest:
 	{
 		Application::Logger::log(
-			__PRETTY_FUNCTION__ + std::string(": EchoRequest"));
+			__PRETTY_FUNCTION__ + std::string(": Robotrequest"));
 		aMessage.setMessageType(GetRobotResponse);
 		aMessage.setBody(": case 2 " + aMessage.asString());
 		break;
