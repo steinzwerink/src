@@ -363,7 +363,7 @@ namespace Application
 		{
 			if (robot && !robot->isActing())
 			{
-				//robot->startActing();
+				robot->startActing();
 
 				std::string remoteIpAdres = "localhost";
 				std::string remotePort = "12345";

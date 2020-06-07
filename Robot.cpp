@@ -116,12 +116,12 @@ void Robot::setSize(const Size &aSize,
 /**
 	 *
 	 */
-void Robot::setCollisionSize(const Size &aSize,
+void Robot::setCollisionSize(const int &aSize,
 							 bool aNotifyObservers /*= true*/)
 {
 
-	collision_size.x = aSize.x;
-	collision_size.y = aSize.y;
+	collision_size = aSize;
+
 	if (aNotifyObservers == true)
 	{
 		notifyObservers();
@@ -290,20 +290,6 @@ Point Robot::getFrontLeft() const
 
 	return frontLeft;
 }
-Point Robot::getFrontLeft(Size aSize) const
-{
-	// x and y are pointing to top left now
-	int x = position.x - (aSize.x / 2);
-	int y = position.y - (aSize.y / 2);
-
-	Point originalFrontLeft(x, y);
-	double angle = Utils::Shape2DUtils::getAngle(front) + 0.5 * Utils::PI;
-
-	Point frontLeft(static_cast<int>((originalFrontLeft.x - position.x) * std::cos(angle) - (originalFrontLeft.y - position.y) * std::sin(angle) + position.x),
-					static_cast<int>((originalFrontLeft.y - position.y) * std::cos(angle) + (originalFrontLeft.x - position.x) * std::sin(angle) + position.y));
-
-	return frontLeft;
-}
 /**
 	 *
 	 */
@@ -458,7 +444,7 @@ void Robot::handleResponse(const Messaging::Message &aMessage)
 	}
 	default:
 	{
-		std::cout<<aMessage.getMessageType()<<std::endl;
+		std::cout << aMessage.getMessageType() << std::endl;
 		Application::Logger::log(
 			__PRETTY_FUNCTION__ + std::string(": default not implemented, ") + aMessage.asString());
 		break;
@@ -534,13 +520,13 @@ void Robot::drive()
 				notifyObservers();
 				break;
 			}
-			else if (collision_walls())
+			if (collision_walls())
 			{
 				Application::Logger::log(__PRETTY_FUNCTION__ + std::string(":collision with wall"));
 				notifyObservers();
 				break;
 			}
-			else if (arrived(goal))
+			if (arrived(goal))
 			{
 				Application::Logger::log(__PRETTY_FUNCTION__ + std::string(": arrived"));
 				notifyObservers();
@@ -596,9 +582,13 @@ void Robot::calculateRoute(GoalPtr aGoal)
 	 */
 bool Robot::arrived(GoalPtr aGoal)
 {
-	if (aGoal && intersects(aGoal->getRegion()))
+	if (aGoal)
 	{
-		return true;
+		int distanceX = abs(position.x - aGoal->getPosition().x);
+		int distanceY = abs(position.y - aGoal->getPosition().y);
+
+		if (distanceX < 1 && distanceY < 1)
+			return true;
 	}
 	return false;
 }
@@ -626,22 +616,21 @@ bool Robot::collision_walls()
 }
 bool Robot::collision_robot()
 {
-	Point frontLeft = getFrontLeft(collision_size);
-	Point frontRight = getFrontRight();
-	Point backLeft = getBackLeft();
-	Point backRight = getBackRight();
 
 	const std::vector<RobotPtr> &robots = RobotWorld::getRobotWorld().getRobots();
 	for (const auto &robot : robots)
 	{
-		if (Utils::Shape2DUtils::intersect(frontLeft, frontRight, robot->getFrontLeft(), robot->getFrontRight()) ||
-			Utils::Shape2DUtils::intersect(frontLeft, backLeft, robot->getFrontLeft(), robot->getBackLeft()) ||
-			Utils::Shape2DUtils::intersect(frontRight, backRight, robot->getFrontRight(), robot->getBackRight()))
+		if (name != robot->getName())
 		{
-			return true;
-		}
-	}
-	return false;
-}
+			int distanceX = abs(position.x - robot->getPosition().x);
+			int distanceY = abs(position.y - robot->getPosition().y);
 
+			if (distanceX < collision_size && distanceY < collision_size)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+}
 } // namespace Model

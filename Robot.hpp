@@ -79,7 +79,7 @@ public:
 	/**
 			 *
 			 */
-	void setCollisionSize(const Size &aSize,
+	void setCollisionSize(const int &aSize,
 				 bool aNotifyObservers = true);
 	/**
 			 *
@@ -180,10 +180,6 @@ public:
 			 *
 			 */
 
-	Point getFrontLeft(Size aSize) const;
-	/**
-			 *
-			 */
 	Point getFrontRight() const;
 	/**
 			 *
@@ -295,7 +291,7 @@ private:
 	std::string name;
 
 	Size size;
-	Size collision_size;
+	int collision_size;
 	Point position;
 
 	BoundedVector front;
