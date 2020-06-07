@@ -381,7 +381,7 @@ namespace Application
 
 				Model::RobotWorldPtr worldptr =
 					Model::RobotWorld::getRobotWorld().getRobotWorldPtr();
-				if (worldptr)
+				if (worldptr && copied)
 				{
 					Messaging::Client client(remoteIpAdres, remotePort, worldptr);
 					Messaging::Message message(
@@ -469,6 +469,7 @@ namespace Application
 	}
 	void MainFrameWindow::OnUnpopulate(CommandEvent &UNUSEDPARAM(anEvent))
 	{
+		copied = false;
 		robotWorldCanvas->unpopulate();
 	}
 	/**
