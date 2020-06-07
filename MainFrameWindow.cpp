@@ -385,7 +385,7 @@ namespace Application
 				{
 					Messaging::Client client(remoteIpAdres, remotePort, worldptr);
 					Messaging::Message message(
-						Model::RobotWorld::MessageType::CopyWorldRequest,
+						Model::RobotWorld::MessageType::CopyRobotsRequest,
 						Model::RobotWorld::getRobotWorld().asCopyString());
 					client.dispatchMessage(message);
 				}

@@ -443,7 +443,7 @@ namespace Model
 				__PRETTY_FUNCTION__ + std::string(": CopyWorlds ") + aMessage.getBody());
 			//Read string and create objects.
 			std::string myString = aMessage.getBody();
-			aMessage.setMessageType(CopyWorldResponse);
+			aMessage.setMessageType(MessageType::CopyWorldResponse);
 			aMessage.setBody(this->asCopyString());
 			fillWorld(myString);
 			break;
@@ -452,7 +452,7 @@ namespace Model
 		{
 			Application::Logger::log(
 				__PRETTY_FUNCTION__ + std::string(": Robotrequest"));
-			aMessage.setMessageType(CopyRobotsResponse);
+			aMessage.setMessageType(MessageType::CopyRobotsResponse);
 			aMessage.setBody("dit zijn de posities van de robots");
 
 			// std::string aName;
@@ -484,6 +484,7 @@ namespace Model
 	{
 		switch (aMessage.getMessageType())
 		{
+			std::cout<<"HET BINNENKOMEND BERICHT IS: "<< aMessage.getMessageType()<<std::endl;
 		case CopyWorldResponse:
 		{
 			Application::Logger::log(
@@ -496,7 +497,7 @@ namespace Model
 		case CopyRobotsResponse:
 		{
 			Application::Logger::log(
-			__PRETTY_FUNCTION__ + std::string("je hebt de positie van de robot binnen ") + aMessage.asString());
+			__PRETTY_FUNCTION__ + std::string("je hebt de positie van de robot binnen :") + aMessage.asString());
 		}
 
 		default:
