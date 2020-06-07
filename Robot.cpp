@@ -117,11 +117,11 @@ void Robot::setSize(const Size &aSize,
 	 *
 	 */
 void Robot::setCollisionSize(const Size &aSize,
-					bool aNotifyObservers /*= true*/)
+							 bool aNotifyObservers /*= true*/)
 {
 
-	collision_size.x = aSize.x * 1.01;
-    collision_size.y = aSize.y * 1.01;
+	collision_size.x = aSize.x;
+	collision_size.y = aSize.y;
 	if (aNotifyObservers == true)
 	{
 		notifyObservers();
@@ -276,7 +276,7 @@ bool Robot::intersects(const Region &aRegion) const
 /**
 	 *
 	 */
-	Point Robot::getFrontLeft() const
+Point Robot::getFrontLeft() const
 {
 	// x and y are pointing to top left now
 	int x = position.x - (size.x / 2);
