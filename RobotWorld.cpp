@@ -453,8 +453,46 @@ namespace Model
 			Application::Logger::log(
 				__PRETTY_FUNCTION__ + std::string(": Robotrequest"));
 			aMessage.setMessageType(MessageType::CopyRobotsResponse);
-			aMessage.setBody("dit zijn de posities van de robots");
 
+			auto robots =
+				(Model::RobotWorld::getRobotWorld().getRobots());
+
+			
+			std::string newMessage = "";
+			for (const auto &robot : robots)
+			{
+				newMessage += robot->asCopyString();
+				newMessage += "\n";
+			}
+
+			aMessage.setBody(newMessage);
+
+			break;
+		}
+
+		default:
+			break;
+		}
+	}
+	/**
+ *
+ */
+	void Model::RobotWorld::handleResponse(const Messaging::Message &aMessage)
+	{
+		switch (aMessage.getMessageType())
+		{
+
+		case CopyWorldResponse:
+		{
+			Application::Logger::log(
+				__PRETTY_FUNCTION__ + std::string(": CopyWorlds ") + aMessage.getBody());
+			//Read string and create objects.
+			std::string myString = aMessage.getBody();
+			fillWorld(myString);
+			break;
+		}
+		case CopyRobotsResponse:
+		{
 			// std::string aName;
 			// unsigned long x;
 			// unsigned long y;
@@ -470,34 +508,9 @@ namespace Model
 			// 	robot->setPosition(Point(x, y), true);
 			// 	robot->setFront(BoundedVector(lx, ly), true);
 			// };
-			break;
-		}
-
-		default:
-			break;
-		}
-	}
-	/**
- *
- */
-	void Model::RobotWorld::handleResponse(const Messaging::Message &aMessage)
-	{
-		switch (aMessage.getMessageType())
-		{
-			std::cout<<"HET BINNENKOMEND BERICHT IS: "<< aMessage.getMessageType()<<std::endl;
-		case CopyWorldResponse:
-		{
 			Application::Logger::log(
-				__PRETTY_FUNCTION__ + std::string(": CopyWorlds ") + aMessage.getBody());
-			//Read string and create objects.
-			std::string myString = aMessage.getBody();
-			fillWorld(myString);
-			break;
-		}
-		case CopyRobotsResponse:
-		{
-			Application::Logger::log(
-			__PRETTY_FUNCTION__ + std::string("je hebt de positie van de robot binnen :") + aMessage.asString());
+				__PRETTY_FUNCTION__ + std::string("posities :") + aMessage.asString());
+				std::cout<<"dit is het bericht: \n"<<aMessage.getBody()<<std::endl;
 		}
 
 		default:
