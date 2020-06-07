@@ -286,7 +286,9 @@ protected:
 			 *
 			 */
 	bool collision_walls();
-
+	/**
+			 *
+			 */
 	bool collision_robot();
 
 private:
