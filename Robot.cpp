@@ -458,6 +458,7 @@ void Robot::handleResponse(const Messaging::Message &aMessage)
 	}
 	default:
 	{
+		std::cout<<aMessage.getMessageType()<<std::endl;
 		Application::Logger::log(
 			__PRETTY_FUNCTION__ + std::string(": default not implemented, ") + aMessage.asString());
 		break;
