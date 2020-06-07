@@ -32,6 +32,9 @@ typedef std::shared_ptr<Robot> RobotPtr;
 class Goal;
 typedef std::shared_ptr<Goal> GoalPtr;
 
+class WayPoint;
+typedef std::shared_ptr<WayPoint> WayPointPtr;
+
 class Robot : public AbstractAgent,
 			  public Messaging::MessageHandler,
 			  public Base::Observer
@@ -277,7 +280,7 @@ protected:
 	/**
 			 *
 			 */
-	bool arrived(GoalPtr aGoal);
+	bool arrived(WayPointPtr aGoal);
 	/**
 			 *
 			 */

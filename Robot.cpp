@@ -518,6 +518,7 @@ void Robot::drive()
 			{
 				Application::Logger::log(__PRETTY_FUNCTION__ + std::string(":collision with robot"));
 				notifyObservers();
+				driving = false;
 				break;
 			}
 			if (collision_walls())
@@ -530,6 +531,7 @@ void Robot::drive()
 			{
 				Application::Logger::log(__PRETTY_FUNCTION__ + std::string(": arrived"));
 				notifyObservers();
+				driving = false;
 				break;
 			}
 
@@ -580,7 +582,7 @@ void Robot::calculateRoute(GoalPtr aGoal)
 /**
 	 *
 	 */
-bool Robot::arrived(GoalPtr aGoal)
+bool Robot::arrived(WayPointPtr aGoal)
 {
 	if (aGoal)
 	{
