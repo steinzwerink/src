@@ -582,15 +582,15 @@ namespace Model
 		if (worldptr)
 		{
 
-			auto robots =
-				(Model::RobotWorld::getRobotWorld().getRobots());
+			auto robot =
+				(Model::RobotWorld::getRobotWorld().getRobots()[0]);
 
 			std::string newMessage = "";
-			for (const auto &robot : robots)
-			{
+			//for (const auto &robot : robots)
+			//{
 				newMessage += robot->asCopyString();
 				newMessage += "\n";
-			}
+			//}
 
 			Messaging::Client client(remoteIpAdres, remotePort, worldptr);
 			Messaging::Message message(
