@@ -493,6 +493,7 @@ std::string Robot::asCopyString() const
  */
 void Robot::drive(WayPointPtr aGoal)
 {
+
 	try
 	{
 		for (std::shared_ptr<AbstractSensor> sensor : sensors)
@@ -508,17 +509,19 @@ void Robot::drive(WayPointPtr aGoal)
 		unsigned pathPoint = 0;
 		while (position.x > 0 && position.x < 500 && position.y > 0 && position.y < 500 && pathPoint < path.size())
 		{
+
 			const PathAlgorithm::Vertex &vertex = path[pathPoint += static_cast<int>(speed)];
 			front = BoundedVector(vertex.asPoint(), position);
 			position.x = vertex.x;
 			position.y = vertex.y;
+
 			if (collision_robot())
 			{
 				Application::Logger::log(__PRETTY_FUNCTION__ + std::string(":collision with robot"));
 				notifyObservers();
 				std::this_thread::sleep_for(std::chrono::milliseconds(1000));
 				stopDriving();
-
+				sendCopyRobots();
 				calculateRoute(goal);
 				//recalculatedNewPath = true;
 				driving = true;
@@ -664,20 +667,18 @@ bool Robot::collision_walls()
 }
 bool Robot::collision_robot()
 {
-
 	const std::vector<RobotPtr> &robots = RobotWorld::getRobotWorld().getRobots();
 	for (const auto &robot : robots)
 	{
-		if (name != robot->getName())
-		{
+
 			int distanceX = abs(position.x - robot->getPosition().x);
 			int distanceY = abs(position.y - robot->getPosition().y);
 
-			if (distanceX < collision_size && distanceY < collision_size)
+			if (distanceX < 100 && distanceY < 100)
 			{
 				return true;
 			}
-		}
+
 		return false;
 	}
 }
