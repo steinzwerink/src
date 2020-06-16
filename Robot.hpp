@@ -274,7 +274,7 @@ namespace Model
 		/**
 			 *
 			 */
-		void drive();
+		void drive(WayPointPtr aGoal);
 		/**
 			 *
 			 */

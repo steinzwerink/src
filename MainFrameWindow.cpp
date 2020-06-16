@@ -380,7 +380,7 @@ namespace Application
 
 			Model::RobotWorldPtr worldptr =
 				Model::RobotWorld::getRobotWorld().getRobotWorldPtr();
-			if (worldptr && copied)
+			if (worldptr)
 			{
 				Messaging::Client client(remoteIpAdres, remotePort, robot);
 				Messaging::Message message(
