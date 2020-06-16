@@ -479,6 +479,33 @@ namespace Model
 
 			break;
 		}
+		case StartRobotRequest:
+		{
+			Application::Logger::log(
+				__PRETTY_FUNCTION__ + std::string(": StartRequest"));
+			Model::RobotPtr robot =
+				(Model::RobotWorld::getRobotWorld().getRobots())[0];
+			if (robot && !robot->isActing())
+			{
+				robot->startActing();
+			}
+			else
+			{
+				robot->getRobotThread().join();
+				std::thread newRobotThread([this, robot] { robot->startDriving(); });
+				robot->getRobotThread().swap(newRobotThread);
+			}
+			aMessage.setMessageType(StartRobotResponse);
+			// if (robot->isDriving())
+			// {
+			// 	aMessage.setBody("Started remote robot.");
+			// }
+			// else
+			// {
+			// 	aMessage.setBody("Unable to start remote robot.");
+			// }
+			break;
+		}
 
 		default:
 			break;
@@ -499,6 +526,12 @@ namespace Model
 			//Read string and create objects.
 			std::string myString = aMessage.getBody();
 			fillWorld(myString);
+			break;
+		}
+		case StartRobotResponse:
+		{
+		Application::Logger::log(
+				__PRETTY_FUNCTION__ + std::string("Started remote robot ") + aMessage.asString());	
 			break;
 		}
 

@@ -383,10 +383,10 @@ void MainFrameWindow::OnStartRobot(CommandEvent &UNUSEDPARAM(anEvent))
 			Model::RobotWorld::getRobotWorld().getRobotWorldPtr();
 		if (worldptr && copied)
 		{
-			Messaging::Client client(remoteIpAdres, remotePort, worldptr);
+			Messaging::Client client(remoteIpAdres, remotePort, robot);
 			Messaging::Message message(
-				Model::RobotWorld::MessageType::CopyRobotsRequest,
-				Model::RobotWorld::getRobotWorld().asCopyString());
+					Model::RobotWorld::MessageType::StartRobotRequest,
+					"StartRobotRequest");
 			client.dispatchMessage(message);
 		}
 	}

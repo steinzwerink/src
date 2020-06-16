@@ -676,4 +676,9 @@ namespace Model
 			return false;
 		}
 	}
+
+	std::thread& Robot::getRobotThread()
+	{
+		return robotThread;
+	}
 } // namespace Model

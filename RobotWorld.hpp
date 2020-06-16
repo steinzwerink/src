@@ -181,8 +181,8 @@ public:
 		CopyRobotsResponse,
 		CopyWorldRequest,
 		CopyWorldResponse,
-		StartRequest,
-		StartResponse
+		StartRobotRequest,
+		StartRobotResponse
 	};
 
 	enum copyType
