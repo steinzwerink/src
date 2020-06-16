@@ -516,9 +516,9 @@ void Robot::drive(WayPointPtr aGoal)
 			{
 				Application::Logger::log(__PRETTY_FUNCTION__ + std::string(":collision with robot"));
 				notifyObservers();
-
-				stopDriving();
 				std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+				stopDriving();
+
 				calculateRoute(goal);
 				//recalculatedNewPath = true;
 				driving = true;
