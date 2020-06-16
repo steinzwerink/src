@@ -452,20 +452,30 @@ namespace Model
 		{
 			Application::Logger::log(
 				__PRETTY_FUNCTION__ + std::string(": Robotrequest"));
-			aMessage.setMessageType(MessageType::CopyRobotsResponse);
 
-			auto robots =
-				(Model::RobotWorld::getRobotWorld().getRobots());
+			std::string allRobots = aMessage.getBody();
+			std::string aRobotName;
+			unsigned long x;
+			unsigned long y;
+			unsigned long lx;
+			unsigned long ly;
 
-			
-			std::string newMessage = "";
-			for (const auto &robot : robots)
+			std::stringstream ss(allRobots);
+			std::string to;
+
+			while (std::getline(ss, to, '\n'))
 			{
-				newMessage += robot->asCopyString();
-				newMessage += "\n";
-			}
+				std::stringstream test(to);
+				test >> aRobotName >> x >> y >> lx >> ly;
 
-			aMessage.setBody(newMessage);
+				Model::RobotPtr robot =
+					(Model::RobotWorld::getRobotWorld().getRobot(aRobotName));
+				if (robot)
+				{
+					robot->setPosition(Point(x, y), true);
+					robot->setFront(BoundedVector(lx, ly), true);
+				}
+			}
 
 			break;
 		}
@@ -490,27 +500,6 @@ namespace Model
 			std::string myString = aMessage.getBody();
 			fillWorld(myString);
 			break;
-		}
-		case CopyRobotsResponse:
-		{
-			// std::string aName;
-			// unsigned long x;
-			// unsigned long y;
-			// unsigned long lx;
-			// unsigned long ly;
-
-			// ss >> aName >> x >> y >> lx >> ly;
-
-			// Model::RobotPtr robot =
-			// 	(Model::RobotWorld::getRobotWorld().getRobots())[1];
-			// if (robot)
-			// {
-			// 	robot->setPosition(Point(x, y), true);
-			// 	robot->setFront(BoundedVector(lx, ly), true);
-			// };
-			Application::Logger::log(
-				__PRETTY_FUNCTION__ + std::string("posities :") + aMessage.asString());
-				std::cout<<"dit is het bericht: \n"<<aMessage.getBody()<<std::endl;
 		}
 
 		default:

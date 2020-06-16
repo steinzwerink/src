@@ -310,6 +310,8 @@ private:
 
 	std::thread robotThread;
 	mutable std::recursive_mutex robotMutex;
+
+	void sendCopyRobots();
 };
 } // namespace Model
 #endif // ROBOT_HPP_
