@@ -516,14 +516,20 @@ void Robot::drive(WayPointPtr aGoal)
 			front = BoundedVector(vertex.asPoint(), position);
 			position.x = vertex.x;
 			position.y = vertex.y;
-
+			if (arrived(aGoal))
+			{
+				Application::Logger::log(__PRETTY_FUNCTION__ + std::string(": arrived"));
+				notifyObservers();
+				driving = false;
+				break;
+			}
 			if (collision_robot())
 			{
 				Application::Logger::log(__PRETTY_FUNCTION__ + std::string(":collision with robot"));
 				notifyObservers();
-				std::this_thread::sleep_for(std::chrono::milliseconds(1000));
+				std::this_thread::sleep_for(std::chrono::milliseconds(5000));
 				stopDriving();
-				sendCopyRobots();
+
 				calculateRoute(goal);
 				//	recalculatedNewPath = true;
 				driving = true;
@@ -537,13 +543,7 @@ void Robot::drive(WayPointPtr aGoal)
 				notifyObservers();
 				break;
 			}
-			if (arrived(aGoal))
-			{
-				Application::Logger::log(__PRETTY_FUNCTION__ + std::string(": arrived"));
-				notifyObservers();
-				driving = false;
-				break;
-			}
+
 			sendCopyRobots();
 			notifyObservers();
 
@@ -552,7 +552,7 @@ void Robot::drive(WayPointPtr aGoal)
 			// this should be the last thing in the loop
 			if (driving == false)
 			{
-				return;
+				break;
 			}
 		} // while
 
@@ -640,7 +640,7 @@ bool Robot::arrived(WayPointPtr aGoal)
 		int distanceX = abs(position.x - aGoal->getPosition().x);
 		int distanceY = abs(position.y - aGoal->getPosition().y);
 
-		if (distanceX < 1 && distanceY < 1)
+		if (distanceX < 10 && distanceY < 10)
 			return true;
 	}
 	return false;
@@ -688,7 +688,7 @@ bool Robot::collision_robot()
 			int distanceX = abs(position.x - robot->getPosition().x);
 			int distanceY = abs(position.y - robot->getPosition().y);
 
-			if (distanceX < 100 && distanceY < 100)
+			if (distanceX < 150 && distanceY < 150)
 			{
 				return true;
 			}
