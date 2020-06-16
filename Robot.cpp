@@ -2,6 +2,8 @@
 #include <sstream>
 #include <ctime>
 #include <chrono>
+#include <algorithm>.
+
 #include "Thread.hpp"
 #include "MathUtils.hpp"
 #include "Logger.hpp"
@@ -523,7 +525,7 @@ void Robot::drive(WayPointPtr aGoal)
 				stopDriving();
 				sendCopyRobots();
 				calculateRoute(goal);
-				//recalculatedNewPath = true;
+				//	recalculatedNewPath = true;
 				driving = true;
 				drive(goal);
 
@@ -667,9 +669,21 @@ bool Robot::collision_walls()
 }
 bool Robot::collision_robot()
 {
-	const std::vector<RobotPtr> &robots = RobotWorld::getRobotWorld().getRobots();
+
+	auto robots = RobotWorld::getRobotWorld().getRobots();
+	auto robotstien = RobotWorld::getRobotWorld().getRobot("Stein");
+
+	if (robotstien)
+	{
+		auto it = std::find(robots.begin(), robots.end(), robotstien);
+		robots.erase(it);
+	}
+
 	for (const auto &robot : robots)
 	{
+
+		if (name != robot->getName())
+		{
 
 			int distanceX = abs(position.x - robot->getPosition().x);
 			int distanceY = abs(position.y - robot->getPosition().y);
@@ -678,7 +692,7 @@ bool Robot::collision_robot()
 			{
 				return true;
 			}
-
+		}
 		return false;
 	}
 }
