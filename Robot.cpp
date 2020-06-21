@@ -512,7 +512,6 @@ namespace Model
 					Application::Logger::log(__PRETTY_FUNCTION__ + std::string(":collision with robot"));
 					sendCopyRobots();
 					notifyObservers();
-					std::this_thread::sleep_for(std::chrono::milliseconds(5000));
 
 					stopOtherRobot();
 
@@ -520,17 +519,19 @@ namespace Model
 					Model::RobotPtr myRobot = Model::RobotWorld::getRobotWorld().getRobot(this->getName());
 					Model::RobotPtr other_robot = getOtherRobot(robots);
 
-					if (stop)
-					{
-						stopDriving();
-					}
-					std::cout << "DE ANDERE ROBOT ZIJN STATUS = " << other_robot->getStop() << std::endl;
+					// if (stop)
+					// {
+					// 	stopDriving();
+					// }
+
+					std::cout<<"Mijn Robot Status:  "<<myRobot->getStop()<<std::endl;
+					std::cout<<"Andere Robot Status:  "<<other_robot->getStop()<<std::endl;
+
 					if (other_robot->getStop())
 					{
-						std::cout << "DE ANDERE ROBOT is AL GESTOPT: " << other_robot->getStop() << std::endl;
-						calculateRoute(goal);
-						driving = true;
-						drive(goal);
+						std::this_thread::sleep_for(std::chrono::milliseconds(5000));
+
+						stopDriving();
 					}
 
 					calculateRoute(goal);
