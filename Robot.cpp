@@ -519,19 +519,17 @@ namespace Model
 					Model::RobotPtr myRobot = Model::RobotWorld::getRobotWorld().getRobot(this->getName());
 					Model::RobotPtr other_robot = getOtherRobot(robots);
 
-					// if (stop)
-					// {
-					// 	stopDriving();
-					// }
-
-					std::cout<<"Mijn Robot Status:  "<<myRobot->getStop()<<std::endl;
-					std::cout<<"Andere Robot Status:  "<<other_robot->getStop()<<std::endl;
+					std::cout << "Mijn Robot Status:  " << myRobot->getStop() << std::endl;
+					std::cout << "Andere Robot Status:  " << other_robot->getStop() << std::endl;
+					
+					auto robotnrnul = RobotWorld::getRobotWorld().getRobots()[0];
+					std::cout << "ROBOT 0 is:  "<<robotnrnul->asCopyString()  <<std::endl;
+					
 
 					if (other_robot->getStop())
 					{
-						std::this_thread::sleep_for(std::chrono::milliseconds(5000));
-
 						stopDriving();
+						std::this_thread::sleep_for(std::chrono::milliseconds(5000));
 					}
 
 					calculateRoute(goal);
