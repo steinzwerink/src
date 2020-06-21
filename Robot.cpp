@@ -516,9 +516,20 @@ namespace Model
 
 					stopOtherRobot();
 
+					std::vector<Model::RobotPtr> robots = RobotWorld::getRobotWorld().getRobots();
+					Model::RobotPtr myRobot = Model::RobotWorld::getRobotWorld().getRobot(this->getName());
+					Model::RobotPtr other_robot = getOtherRobot(robots);
+
 					if (stop)
 					{
 						stopDriving();
+					}
+					if (other_robot->getStop())
+					{
+						std::cout << "DE ANDERE ROBOT IS AL GESTOPT" << std::endl;
+						calculateRoute(goal);
+						driving = true;
+						drive(goal);
 					}
 
 					calculateRoute(goal);

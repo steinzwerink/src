@@ -513,13 +513,22 @@ namespace Model
 				std::stringstream test(to);
 				test >> aRobotName >> stopStatus;
 
+				bool incomingStopstatus;
+				if (stopStatus == 1){
+					incomingStopstatus = true;
+				}else{
+					incomingStopstatus = false;
+				}
+
 				Model::RobotPtr otherRobot =
 					(Model::RobotWorld::getRobotWorld().getRobot(aRobotName));
 				if (otherRobot && otherRobot->isActing())
 				{
-					otherRobot->setStop(true);
+					otherRobot->setStop(incomingStopstatus);
 				}
+
 			}
+			
 
 			break;
 		}
