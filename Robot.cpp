@@ -519,11 +519,9 @@ namespace Model
 					Model::RobotPtr myRobot = Model::RobotWorld::getRobotWorld().getRobot(this->getName());
 					Model::RobotPtr other_robot = getOtherRobot(robots);
 
-					std::cout << "Mijn Robot Status:  " << myRobot->getStop() << std::endl;
-					std::cout << "Andere Robot Status:  " << other_robot->getStop() << std::endl;
+					sort(robots.begin(), robots.end());
 					
-					auto robotnrnul = RobotWorld::getRobotWorld().getRobots()[0];
-					std::cout << "ROBOT 0 is:  "<<robotnrnul->asCopyString()  <<std::endl;
+					std::cout << "DE ROBOTS ZIJN: \n"<<robots->asCopyString()  <<std::endl;
 					
 
 					if (other_robot->getStop())
