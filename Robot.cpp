@@ -488,6 +488,7 @@ void Robot::drive(WayPointPtr aGoal)
 			if (arrived(aGoal))
 			{
 				Application::Logger::log(__PRETTY_FUNCTION__ + std::string(": arrived"));
+				sendCopyRobots();
 				notifyObservers();
 				driving = false;
 				break;
@@ -495,6 +496,7 @@ void Robot::drive(WayPointPtr aGoal)
 			if (collision_robot())
 			{
 				Application::Logger::log(__PRETTY_FUNCTION__ + std::string(":collision with robot"));
+				sendCopyRobots();
 				notifyObservers();
 				std::this_thread::sleep_for(std::chrono::milliseconds(5000));
 				stopDriving();
@@ -508,6 +510,7 @@ void Robot::drive(WayPointPtr aGoal)
 			if (collision_walls())
 			{
 				Application::Logger::log(__PRETTY_FUNCTION__ + std::string(":collision with wall"));
+				sendCopyRobots();
 				notifyObservers();
 				break;
 			}
