@@ -487,30 +487,31 @@ namespace Model
 				driving = true;
 				drive(goal);
 
-			if (speed == 0.0)
-			{
-				speed = 10.0;
-			}
-
-			unsigned pathPoint = 0;
-			while (position.x > 0 && position.x < 500 && position.y > 0 && position.y < 500 && pathPoint < path.size())
-			{
-				Application::Logger::log(__PRETTY_FUNCTION__ + std::string(":collision with wall"));
-				sendCopyRobots();
-				notifyObservers();
-
-				std::this_thread::sleep_for(std::chrono::milliseconds(100));
-
-				// this should be the last thing in the loop
-				if (driving == false)
+				if (speed == 0.0)
 				{
-					break;
+					speed = 10.0;
 				}
-			} // while
 
-			for (std::shared_ptr<AbstractSensor> sensor : sensors)
-			{
-				//sensor->setOff();
+				unsigned pathPoint = 0;
+				while (position.x > 0 && position.x < 500 && position.y > 0 && position.y < 500 && pathPoint < path.size())
+				{
+					Application::Logger::log(__PRETTY_FUNCTION__ + std::string(":collision with wall"));
+					sendCopyRobots();
+					notifyObservers();
+
+					std::this_thread::sleep_for(std::chrono::milliseconds(100));
+
+					// this should be the last thing in the loop
+					if (driving == false)
+					{
+						break;
+					}
+				} // while
+
+				for (std::shared_ptr<AbstractSensor> sensor : sensors)
+				{
+					//sensor->setOff();
+				}
 			}
 		}
 		catch (std::exception &e)
