@@ -406,7 +406,7 @@ void MainFrameWindow::OnStopRobot(CommandEvent &UNUSEDPARAM(anEvent))
 	class std::vector<Model::RobotPtr> robots = Model::RobotWorld::getRobotWorld().getRobots();
 	for (const auto &robot : robots)
 	{
-		if (robot && !robot->isActing())
+		if (robot && robot->isActing())
 		{
 			robot->stopActing();
 		}
