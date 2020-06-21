@@ -500,16 +500,30 @@ namespace Model
 		{
 			Application::Logger::log(
 				__PRETTY_FUNCTION__ + std::string(": StopRequest"));
-			Model::RobotPtr otherRobot = Model::RobotWorld::getRobotWorld().getRobot(aMessage.getBody());
+			
+			std::string otherRobotString = aMessage.getBody();
+			std::string aRobotName;
+			unsigned long stopStatus;
 
-			if (otherRobot && otherRobot->isActing())
+			std::stringstream ss(otherRobotString);
+			std::string to;
+
+			while (std::getline(ss, to, '\n'))
 			{
-				otherRobot->setStop(true);
+				std::stringstream test(to);
+				test >> aRobotName >> stopStatus;
+
+				Model::RobotPtr otherRobot =
+					(Model::RobotWorld::getRobotWorld().getRobot(aRobotName));
+				if (otherRobot && otherRobot->isActing())
+				{
+					otherRobot->setStop(true);
+				}
 			}
 
 			break;
 		}
-			//robot->setStopped();
+
 		default:
 			break;
 		}

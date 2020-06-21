@@ -588,7 +588,7 @@ namespace Model
 
 			std::string newMessage = "";
 
-			newMessage += other_robot->asCopyString();
+			newMessage += other_robot->getName();
 			newMessage += " ";
 			newMessage += "1";
 			newMessage += "\n";
