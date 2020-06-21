@@ -302,7 +302,7 @@ namespace Model
 
 	void RobotWorld::populateScenario_1_lhs(int aNumberOfWalls)
 	{
-		RobotWorld::getRobotWorld().newRobot("Stein", Point(62,205), false);
+		RobotWorld::getRobotWorld().newRobot("Stein", Point(62, 205), false);
 
 		static Point coordinates[] = {Point(0, 250), Point(150, 250), Point(150, 200), Point(150, 300),
 									  Point(600, 250), Point(350, 250), Point(350, 200), Point(350, 300), Point(500, 0), Point(500, 500), Point(0, 500), Point(500, 500),
@@ -312,16 +312,16 @@ namespace Model
 		{
 			RobotWorld::getRobotWorld().newWall(coordinates[i], coordinates[i + 1], false);
 		}
-		RobotWorld::getRobotWorld().newGoal("Stein", Point(429,281), false);
+		RobotWorld::getRobotWorld().newGoal("Stein", Point(429, 281), false);
 
 		notifyObservers();
 	}
 
 	void RobotWorld::populateScenario_1_rhs(int aNumberOfWalls)
 	{
-		RobotWorld::getRobotWorld().newRobot("Thomas", Point (57,294), false);
+		RobotWorld::getRobotWorld().newRobot("Thomas", Point(57, 294), false);
 
-		RobotWorld::getRobotWorld().newGoal("Thomas", Point(432,218), false);
+		RobotWorld::getRobotWorld().newGoal("Thomas", Point(432, 218), false);
 
 		notifyObservers();
 	}
@@ -464,7 +464,6 @@ namespace Model
 				{
 					robot->setPosition(Point(x, y), true);
 					robot->setFront(BoundedVector(lx, ly), true);
-
 				}
 			}
 
@@ -497,7 +496,20 @@ namespace Model
 			// }
 			break;
 		}
-					//robot->setStopped();
+		case StopRobotRequest:
+		{
+			Application::Logger::log(
+				__PRETTY_FUNCTION__ + std::string(": StopRequest"));
+			Model::RobotPtr otherRobot = Model::RobotWorld::getRobotWorld().getRobot(aMessage.getBody());
+
+			if (otherRobot && otherRobot->isActing())
+			{
+				otherRobot->setStop(true);
+			}
+
+			break;
+		}
+			//robot->setStopped();
 		default:
 			break;
 		}
@@ -522,14 +534,22 @@ namespace Model
 		case StartRobotResponse:
 		{
 			Application::Logger::log(
-				__PRETTY_FUNCTION__ + std::string("Started remote robot ") + aMessage.asString());
+				__PRETTY_FUNCTION__ + std::string("Started other robot ") + aMessage.asString());
+			break;
+		}
+		case StopRobotResponse:
+		{
+			Application::Logger::log(
+				__PRETTY_FUNCTION__ + std::string("Stopped other robot ") + aMessage.asString());
+			std::string stopStatus = aMessage.getBody();
+			std::cout <<"DE BODY VAN HET BERICHT IS: "<<aMessage.getBody()<< std::endl;
 			break;
 		}
 
 		default:
 		{
 			Application::Logger::log(
-				__PRETTY_FUNCTION__ + std::string(": Unknown response type") + aMessage.getBody());
+				__PRETTY_FUNCTION__ + std::string(": Unknown other type") + aMessage.getBody());
 			break;
 		}
 		}

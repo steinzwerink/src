@@ -276,6 +276,8 @@ public:
 		GetRobotResponse
 	};
 
+	void stopOtherRobot();
+
 	std::thread &getRobotThread();
 	Model::RobotPtr getOtherRobot(std::vector<Model::RobotPtr> allRobots);
 
