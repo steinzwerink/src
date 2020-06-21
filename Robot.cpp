@@ -521,7 +521,7 @@ namespace Model
 
 					sort(robots.begin(), robots.end());
 					
-					std::cout << "DE ROBOTS ZIJN: \n"<<robots->asCopyString()  <<std::endl;
+					std::cout << "DE ROBOTS ZIJN: \n"<<robots[0]->asCopyString()  <<std::endl;
 					
 
 					if (other_robot->getStop())
