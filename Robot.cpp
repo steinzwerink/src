@@ -205,7 +205,7 @@ void Robot::startDriving()
 	driving = true;
 
 	goal = RobotWorld::getRobotWorld().getGoal(this->name);
-	std::cout << this->name << std::endl;
+
 	calculateRoute(goal);
 
 	drive(goal);
@@ -379,38 +379,7 @@ void Robot::handleRequest(Messaging::Message &aMessage)
 		aMessage.setBody(": case 2 " + aMessage.asString());
 		break;
 	}
-	// case Model::RobotWorld::CopyRobots: {
-	// 	Application::Logger::log(
-	// 			__PRETTY_FUNCTION__ + std::string(": CopyRobot ")
-	// 					+ aMessage.getBody());
-	// 	std::stringstream ss;
-	// 	ss << aMessage.getBody();
 
-	// 	std::string aName;
-	// 	unsigned long x;
-	// 	unsigned long y;
-	// 	unsigned long lx;
-	// 	unsigned long ly;
-
-	// 	ss >> aName >> x >> y >> lx >> ly;
-
-	// 	Model::RobotPtr robot =
-	// 			Model::RobotWorld::getRobotWorld().getRobot(
-	// 					(std::string(
-	// 							Application::MainApplication::getArg(
-	// 									"-worldname").value)));
-
-	// 	if (robot) {
-	// 		Application::Logger::log(robot->asString());
-	// 		robot->setPosition(Point(x, y), true);
-	// 		robot->setFront(BoundedVector(lx, ly), true);
-
-	// 	} else {
-	// 		Application::Logger::log("No robot has the name : " + aName);
-	// 	}
-
-	// 	break;
-	// }
 	default:
 	{
 		Application::Logger::log(
@@ -531,7 +500,6 @@ void Robot::drive(WayPointPtr aGoal)
 				stopDriving();
 
 				calculateRoute(goal);
-				//	recalculatedNewPath = true;
 				driving = true;
 				drive(goal);
 
@@ -592,15 +560,12 @@ void Robot::sendCopyRobots()
 	if (worldptr)
 	{
 
-		auto robot =
-			(Model::RobotWorld::getRobotWorld().getRobots()[0]);
+		Model::RobotPtr robot = (Model::RobotWorld::getRobotWorld().getRobots()[0]);
 
 		std::string newMessage = "";
-		//for (const auto &robot : robots)
-		//{
+
 		newMessage += robot->asCopyString();
 		newMessage += "\n";
-		//}
 
 		Messaging::Client client(remoteIpAdres, remotePort, worldptr);
 		Messaging::Message message(
@@ -670,12 +635,12 @@ bool Robot::collision_walls()
 bool Robot::collision_robot()
 {
 
-	auto robots = RobotWorld::getRobotWorld().getRobots();
-	auto robotstien = RobotWorld::getRobotWorld().getRobot("Stein");
+	std::vector<Model::RobotPtr> robots = RobotWorld::getRobotWorld().getRobots();
+	Model::RobotPtr other_robot = Model::RobotWorld::getRobotWorld().getRobots()[1];
 
-	if (robotstien)
+	if (other_robot)
 	{
-		auto it = std::find(robots.begin(), robots.end(), robotstien);
+		std::vector<Model::RobotPtr>::iterator it = std::find(robots.begin(), robots.end(), other_robot);
 		robots.erase(it);
 	}
 
@@ -688,7 +653,7 @@ bool Robot::collision_robot()
 			int distanceX = abs(position.x - robot->getPosition().x);
 			int distanceY = abs(position.y - robot->getPosition().y);
 
-			if (distanceX < 150 && distanceY < 150)
+			if (distanceX < collision_size && distanceY < collision_size)
 			{
 				return true;
 			}
