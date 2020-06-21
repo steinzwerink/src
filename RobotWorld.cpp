@@ -549,7 +549,6 @@ namespace Model
 					incomingStopStatus = false;
 				}
 
-				std::cout << aRobotName << std::endl;
 				Model::RobotPtr otherRobot =
 					(Model::RobotWorld::getRobotWorld().getRobot(aRobotName));
 				if (otherRobot && otherRobot->isActing())

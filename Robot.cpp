@@ -477,7 +477,6 @@ namespace Model
  *
  */
 
-
 	void Robot::drive(WayPointPtr aGoal)
 	{
 
@@ -523,12 +522,16 @@ namespace Model
 
 					sort(robots.begin(), robots.end(), compareRobots());
 
-					if (other_robot->getStop())
-					{
-						robots[0]->stopDriving();
-						//stopDriving();
-						std::this_thread::sleep_for(std::chrono::milliseconds(5000));
-					}
+					robots[1]->stopDriving();
+					//stopDriving();
+					std::this_thread::sleep_for(std::chrono::milliseconds(5000));
+
+					// if (other_robot->getStop())
+					// {
+					// 	robots[0]->stopDriving();
+					// 	//stopDriving();
+					// 	std::this_thread::sleep_for(std::chrono::milliseconds(5000));
+					// }
 
 					calculateRoute(goal);
 					//	recalculatedNewPath = true;
