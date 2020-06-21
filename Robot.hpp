@@ -278,11 +278,6 @@ namespace Model
 
 		void stopOtherRobot();
 
-		bool operator<(const Robot &r) const
-		{
-			return (this->name < r.name);
-		}
-
 		std::thread &getRobotThread();
 		Model::RobotPtr getOtherRobot(std::vector<Model::RobotPtr> allRobots);
 

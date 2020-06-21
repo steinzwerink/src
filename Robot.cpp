@@ -477,7 +477,13 @@ namespace Model
  *
  */
 
-
+struct less_than_key
+{
+    inline bool operator() (const Model::RobotPtr& struct1, const Model::RobotPtr& struct2)
+    {
+        return (struct1->getName() < struct2->getName());
+    }
+};
 	void Robot::drive(WayPointPtr aGoal)
 	{
 
@@ -521,7 +527,7 @@ namespace Model
 					Model::RobotPtr myRobot = Model::RobotWorld::getRobotWorld().getRobot(this->getName());
 					Model::RobotPtr other_robot = getOtherRobot(robots);
 
-					sort(robots.begin(), robots.end());
+					sort(robots.begin(), robots.end(), less_than_key());
 
 					std::cout << "DE ROBOTS ZIJN: \n"
 							  << robots[0]->asCopyString() << std::endl;
