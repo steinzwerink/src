@@ -524,9 +524,10 @@ namespace Model
 					{
 						stopDriving();
 					}
+					std::cout << "DE ANDERE ROBOT ZIJN STATUS = " << other_robot->getStop() << std::endl;
 					if (other_robot->getStop())
 					{
-						std::cout << "DE ANDERE ROBOT IS AL GESTOPT" << std::endl;
+						std::cout << "DE ANDERE ROBOT is AL GESTOPT: " << other_robot->getStop() << std::endl;
 						calculateRoute(goal);
 						driving = true;
 						drive(goal);
