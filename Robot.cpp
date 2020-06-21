@@ -636,7 +636,7 @@ bool Robot::collision_robot()
 {
 
 	std::vector<Model::RobotPtr> robots = RobotWorld::getRobotWorld().getRobots();
-	Model::RobotPtr other_robot = Model::RobotWorld::getRobotWorld().getRobots()[1];
+	Model::RobotPtr other_robot = Model::RobotWorld::getRobotWorld().getRobots()[0];
 
 	if (other_robot)
 	{

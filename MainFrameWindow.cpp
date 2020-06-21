@@ -261,12 +261,6 @@ namespace Application
 		Panel *panel = new Panel(rhsPanel);
 
 		GridBagSizer *sizer = new GridBagSizer();
-
-		// sizer->Add(makeButton(panel,
-		// 					  "Populate",
-		// 					  [this](CommandEvent &anEvent) { this->OnPopulate(anEvent); }),
-		// 		   GBPosition(0, 0),
-		// 		   GBSpan(1, 1), EXPAND);
 		sizer->Add(makeButton(panel,
 							  "Scenario_1_lhs",
 							  [this](CommandEvent &anEvent) { this->scenario_1_lhs(anEvent); }),
