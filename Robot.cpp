@@ -116,6 +116,7 @@ namespace Model
 	void Robot::setStop(const bool aStop)
 	{
 		stop = aStop;
+		std::this_thread::sleep_for(std::chrono::milliseconds(5000));
 	}
 	/**
 	 *
@@ -508,30 +509,22 @@ namespace Model
 					driving = false;
 					break;
 				}
-				if (collision_robot())
+
+				std::vector<Model::RobotPtr> robots = RobotWorld::getRobotWorld().getRobots();
+				auto myRobot = RobotWorld::getRobotWorld().getRobot(this->name);
+				auto otherRobot = robots[1];
+
+				sort(robots.begin(), robots.end(), compareRobots());
+
+				if (collision_robot(robots))
 				{
 					Application::Logger::log(__PRETTY_FUNCTION__ + std::string(":collision with robot"));
 					sendCopyRobots();
 					notifyObservers();
 
-					stopOtherRobot();
+					stopOtherRobot(robots, myRobot);
 
-					std::vector<Model::RobotPtr> robots = RobotWorld::getRobotWorld().getRobots();
-					Model::RobotPtr myRobot = Model::RobotWorld::getRobotWorld().getRobot(this->getName());
-					Model::RobotPtr other_robot = getOtherRobot(robots);
-
-					sort(robots.begin(), robots.end(), compareRobots());
-
-					robots[1]->stopDriving();
-					//stopDriving();
-					std::this_thread::sleep_for(std::chrono::milliseconds(5000));
-
-					// if (other_robot->getStop())
-					// {
-					// 	robots[0]->stopDriving();
-					// 	//stopDriving();
-					// 	std::this_thread::sleep_for(std::chrono::milliseconds(5000));
-					// }
+					otherRobot->stopDriving();
 
 					calculateRoute(goal);
 					//	recalculatedNewPath = true;
@@ -575,7 +568,7 @@ namespace Model
 		}
 	}
 
-	void Robot::stopOtherRobot()
+	void Robot::stopOtherRobot(std::vector<Model::RobotPtr> allRobots, Model::RobotPtr myRobot)
 	{
 		std::string remoteIpAdres = "localhost";
 		std::string remotePort = "12345";
@@ -594,22 +587,14 @@ namespace Model
 		if (worldptr)
 		{
 
-			std::vector<Model::RobotPtr> robots = RobotWorld::getRobotWorld().getRobots();
-			Model::RobotPtr myRobot = Model::RobotWorld::getRobotWorld().getRobot(this->getName());
-			Model::RobotPtr other_robot = getOtherRobot(robots);
+			Model::RobotPtr otherRobot = getOtherRobot(allRobots, myRobot);
 
-			std::string newMessage = "";
-
-			newMessage += other_robot->getName();
-			newMessage += " ";
-			newMessage += "1";
-			newMessage += "\n";
 
 			Messaging::Client client(remoteIpAdres, remotePort, worldptr);
 			Messaging::Message message(
 				Model::RobotWorld::MessageType::StopRobotRequest,
 				"Test");
-			message.setBody(newMessage);
+			message.setBody(otherRobot->getName());
 			client.dispatchMessage(message);
 		}
 	}
@@ -707,39 +692,24 @@ namespace Model
 		}
 		return false;
 	}
-	bool Robot::collision_robot()
+	bool Robot::collision_robot(std::vector<Model::RobotPtr> allRobots)
 	{
 
-		std::vector<Model::RobotPtr> robots = RobotWorld::getRobotWorld().getRobots();
-		Model::RobotPtr myRobot = Model::RobotWorld::getRobotWorld().getRobot(this->getName());
-		Model::RobotPtr other_robot = getOtherRobot(robots);
+		Model::RobotPtr myRobot = allRobots[1];
+		Model::RobotPtr otherRobot = allRobots[0];
 
-		if (other_robot)
+		int distanceX = abs(myRobot->getPosition().x - otherRobot->getPosition().x);
+		int distanceY = abs(myRobot->getPosition().y - otherRobot->getPosition().y);
+
+		if (distanceX < collision_size && distanceY < collision_size)
 		{
-			std::vector<Model::RobotPtr>::iterator it = std::find(robots.begin(), robots.end(), myRobot);
-			robots.erase(it);
+			return true;
 		}
-		for (const auto &robot : robots)
-		{
-
-			if (name != robot->getName())
-			{
-
-				int distanceX = abs(position.x - robot->getPosition().x);
-				int distanceY = abs(position.y - robot->getPosition().y);
-
-				if (distanceX < collision_size && distanceY < collision_size)
-				{
-					return true;
-				}
-			}
-			return false;
-		}
+		return false;
 	}
 
-	Model::RobotPtr Robot::getOtherRobot(std::vector<Model::RobotPtr> allRobots)
+	Model::RobotPtr Robot::getOtherRobot(std::vector<Model::RobotPtr> allRobots, Model::RobotPtr myRobot)
 	{
-		Model::RobotPtr myRobot = Model::RobotWorld::getRobotWorld().getRobot(this->getName());
 		Model::RobotPtr otherRobot;
 
 		for (const auto &robot : allRobots)

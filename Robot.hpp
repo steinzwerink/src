@@ -276,8 +276,6 @@ namespace Model
 			GetRobotResponse
 		};
 
-		void stopOtherRobot();
-
 		struct compareRobots
 		{
 			inline bool operator()(const Model::RobotPtr &struct1, const Model::RobotPtr &struct2)
@@ -287,7 +285,9 @@ namespace Model
 		};
 
 		std::thread &getRobotThread();
-		Model::RobotPtr getOtherRobot(std::vector<Model::RobotPtr> allRobots);
+
+		void stopOtherRobot(std::vector<Model::RobotPtr> allRobots, Model::RobotPtr myRobot);
+		Model::RobotPtr getOtherRobot(std::vector<Model::RobotPtr> allRobots, Model::RobotPtr myRobot);
 
 	protected:
 		/**
@@ -309,7 +309,7 @@ namespace Model
 		/**
 			 *
 			 */
-		bool collision_robot();
+		bool collision_robot(std::vector<Model::RobotPtr> allRobots);
 
 	private:
 		std::string name;

@@ -528,7 +528,6 @@ namespace Model
 
 			std::string otherRobotString = aMessage.getBody();
 			std::string aRobotName;
-			unsigned long stopStatus;
 
 			std::stringstream ss(otherRobotString);
 			std::string to;
@@ -536,25 +535,15 @@ namespace Model
 			while (std::getline(ss, to, '\n'))
 			{
 				std::stringstream test(to);
-				test >> aRobotName >> stopStatus;
-
-				bool incomingStopStatus;
-
-				if (stopStatus == 1)
-				{
-					incomingStopStatus = true;
-				}
-				else
-				{
-					incomingStopStatus = false;
-				}
+				test >> aRobotName;
 
 				Model::RobotPtr otherRobot =
 					(Model::RobotWorld::getRobotWorld().getRobot(aRobotName));
 				if (otherRobot && otherRobot->isActing())
 				{
-					otherRobot->setStop(incomingStopStatus);
+					otherRobot->setStop(true);
 				}
+
 			}
 
 			break;
@@ -592,7 +581,6 @@ namespace Model
 			Application::Logger::log(
 				__PRETTY_FUNCTION__ + std::string("Stopped other robot ") + aMessage.asString());
 			std::string stopStatus = aMessage.getBody();
-			std::cout << "DE BODY VAN HET BERICHT IS: " << aMessage.getBody() << std::endl;
 			break;
 		}
 
