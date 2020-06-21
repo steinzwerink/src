@@ -477,13 +477,7 @@ namespace Model
  *
  */
 
-struct less_than_key
-{
-    inline bool operator() (const Model::RobotPtr& struct1, const Model::RobotPtr& struct2)
-    {
-        return (struct1->getName() < struct2->getName());
-    }
-};
+
 	void Robot::drive(WayPointPtr aGoal)
 	{
 
@@ -527,14 +521,12 @@ struct less_than_key
 					Model::RobotPtr myRobot = Model::RobotWorld::getRobotWorld().getRobot(this->getName());
 					Model::RobotPtr other_robot = getOtherRobot(robots);
 
-					sort(robots.begin(), robots.end(), less_than_key());
-
-					std::cout << "DE ROBOTS ZIJN: \n"
-							  << robots[0]->asCopyString() << std::endl;
+					sort(robots.begin(), robots.end(), compareRobots());
 
 					if (other_robot->getStop())
 					{
-						stopDriving();
+						robots[0]->stopDriving();
+						//stopDriving();
 						std::this_thread::sleep_for(std::chrono::milliseconds(5000));
 					}
 

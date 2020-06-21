@@ -278,6 +278,14 @@ namespace Model
 
 		void stopOtherRobot();
 
+		struct compareRobots
+		{
+			inline bool operator()(const Model::RobotPtr &struct1, const Model::RobotPtr &struct2)
+			{
+				return (struct1->getName() < struct2->getName());
+			}
+		};
+
 		std::thread &getRobotThread();
 		Model::RobotPtr getOtherRobot(std::vector<Model::RobotPtr> allRobots);
 
