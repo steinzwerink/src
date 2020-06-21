@@ -21,310 +21,315 @@
 
 namespace Messaging
 {
-class Message;
+	class Message;
 }
 
 namespace Model
 {
-class Robot;
-typedef std::shared_ptr<Robot> RobotPtr;
+	class Robot;
+	typedef std::shared_ptr<Robot> RobotPtr;
 
-class Goal;
-typedef std::shared_ptr<Goal> GoalPtr;
+	class Goal;
+	typedef std::shared_ptr<Goal> GoalPtr;
 
-class WayPoint;
-typedef std::shared_ptr<WayPoint> WayPointPtr;
+	class WayPoint;
+	typedef std::shared_ptr<WayPoint> WayPointPtr;
 
-class Robot : public AbstractAgent,
-			  public Messaging::MessageHandler,
-			  public Base::Observer
-{
-public:
-	/**
-			 *
-			 */
-	Robot();
-	/**
-			 *
-			 */
-	Robot(const std::string &aName);
-	/**
-			 *
-			 */
-	Robot(const std::string &aName,
-		  const Point &aPosition);
-	/**
-			 *
-			 */
-	virtual ~Robot();
-	/**
-			 *
-			 */
-	std::string getName() const
+	class Robot : public AbstractAgent,
+				  public Messaging::MessageHandler,
+				  public Base::Observer
 	{
-		return name;
-	}
-	/**
+	public:
+		/**
 			 *
 			 */
-	void setName(const std::string &aName,
-				 bool aNotifyObservers = true);
-	/**
+		Robot();
+		/**
 			 *
 			 */
-	bool getStop() const;
-	/**
+		Robot(const std::string &aName);
+		/**
 			 *
 			 */
-	void setStop(const bool aStop) ;
-	/**
+		Robot(const std::string &aName,
+			  const Point &aPosition);
+		/**
 			 *
 			 */
-	Size getSize() const;
-	/**
+		virtual ~Robot();
+		/**
 			 *
 			 */
-	void setSize(const Size &aSize,
-				 bool aNotifyObservers = true);
-
-	/**
+		std::string getName() const
+		{
+			return name;
+		}
+		/**
 			 *
 			 */
-	void setCollisionSize(const int &aSize,
-						  bool aNotifyObservers = true);
-	/**
-			 *
-			 */
-	Point getPosition() const
-	{
-		return position;
-	}
-	/**
-			 *
-			 */
-	void setPosition(const Point &aPosition,
+		void setName(const std::string &aName,
 					 bool aNotifyObservers = true);
-	/**
+		/**
 			 *
 			 */
-	BoundedVector getFront() const;
-	/**
+		bool getStop() const;
+		/**
 			 *
 			 */
-	void setFront(const BoundedVector &aVector,
-				  bool aNotifyObservers = true);
-	/**
+		void setStop(const bool aStop);
+		/**
 			 *
 			 */
-	float getSpeed() const;
-	/**
+		Size getSize() const;
+		/**
 			 *
 			 */
-	void setSpeed(float aNewSpeed,
-				  bool aNotifyObservers = true);
-	/**
+		void setSize(const Size &aSize,
+					 bool aNotifyObservers = true);
+
+		/**
+			 *
+			 */
+		void setCollisionSize(const int &aSize,
+							  bool aNotifyObservers = true);
+		/**
+			 *
+			 */
+		Point getPosition() const
+		{
+			return position;
+		}
+		/**
+			 *
+			 */
+		void setPosition(const Point &aPosition,
+						 bool aNotifyObservers = true);
+		/**
+			 *
+			 */
+		BoundedVector getFront() const;
+		/**
+			 *
+			 */
+		void setFront(const BoundedVector &aVector,
+					  bool aNotifyObservers = true);
+		/**
+			 *
+			 */
+		float getSpeed() const;
+		/**
+			 *
+			 */
+		void setSpeed(float aNewSpeed,
+					  bool aNotifyObservers = true);
+		/**
 			 *
 			 * @return true if the robot is acting, i.e. either planning or driving
 			 */
-	bool isActing() const
-	{
-		return acting;
-	}
-	/**
+		bool isActing() const
+		{
+			return acting;
+		}
+		/**
 			 *
 			 */
-	virtual void startActing();
-	/**
+		virtual void startActing();
+		/**
 			 *
 			 */
-	virtual void stopActing();
-	/**
+		virtual void stopActing();
+		/**
 			 *
 			 * @return true if the robot is driving
 			 */
-	bool isDriving() const
-	{
-		return driving;
-	}
-	/**
+		bool isDriving() const
+		{
+			return driving;
+		}
+		/**
 			 *
 			 */
-	virtual void startDriving();
-	/**
+		virtual void startDriving();
+		/**
 			 *
 			 */
-	virtual void stopDriving();
-	/**
+		virtual void stopDriving();
+		/**
 			 *
 			 * @return true if the robot is communicating, i.e. listens with an active ServerConnection
 			 */
-	bool isCommunicating() const
-	{
-		return communicating;
-	}
-	/**
+		bool isCommunicating() const
+		{
+			return communicating;
+		}
+		/**
 			 * Starts a ServerConnection that listens at port 12345 unless given
 			 * an other port by specifying a command line argument -local_port=port
 			 */
-	void startCommunicating();
-	/**
+		void startCommunicating();
+		/**
 			 * Connects to the ServerConnection that listens at port 12345 unless given
 			 * an other port by specifying a command line argument -local_port=port
 			 * and sends a message with messageType "1" and a body with "stop"
 			 *
 			 */
-	void stopCommunicating();
-	/**
+		void stopCommunicating();
+		/**
 			 *
 			 */
-	Region getRegion() const;
-	/**
+		Region getRegion() const;
+		/**
 			 *
 			 */
-	bool intersects(const Region &aRegion) const;
-	/**
-			 *
-			 */
-
-	Point getFrontLeft() const;
-	/**
+		bool intersects(const Region &aRegion) const;
+		/**
 			 *
 			 */
 
-	Point getFrontRight() const;
-	/**
+		Point getFrontLeft() const;
+		/**
 			 *
 			 */
-	Point getBackLeft() const;
-	/**
+
+		Point getFrontRight() const;
+		/**
 			 *
 			 */
-	Point getBackRight() const;
-	/**
+		Point getBackLeft() const;
+		/**
+			 *
+			 */
+		Point getBackRight() const;
+		/**
 			 * @name Observer functions
 			 */
-	//@{
-	/**
+		//@{
+		/**
 			 * A Notifier will call this function if this Observer will handle the notifications of that
 			 * Notifier. It is the responsibility of the Observer to filter any events it is interested in.
 			 *
 			 */
-	virtual void handleNotification();
-	//@}
-	/**
+		virtual void handleNotification();
+		//@}
+		/**
 			 *
 			 */
-	PathAlgorithm::OpenSet getOpenSet() const
-	{
-		return astar.getOpenSet();
-	}
-	/**
+		PathAlgorithm::OpenSet getOpenSet() const
+		{
+			return astar.getOpenSet();
+		}
+		/**
 			 *
 			 */
-	PathAlgorithm::Path getPath() const
-	{
-		return path;
-	}
-	/**
+		PathAlgorithm::Path getPath() const
+		{
+			return path;
+		}
+		/**
 			 * @name Messaging::MessageHandler functions
 			 */
-	//@{
-	/**
+		//@{
+		/**
 			 * This function is called by a ServerSesssion whenever a message is received. If the request is handled,
 			 * any response *must* be set in the Message argument. The message argument is then echoed back to the
 			 * requester, probably a ClientSession.
 			 *
 			 * @see Messaging::RequestHandler::handleRequest( Messaging::Message& aMessage)
 			 */
-	virtual void handleRequest(Messaging::Message &aMessage);
-	/**
+		virtual void handleRequest(Messaging::Message &aMessage);
+		/**
 			 * This function is called by a ClientSession whenever a response to a previous request is received.
 			 *
 			 * @see Messaging::ResponseHandler::handleResponse( const Messaging::Message& aMessage)
 			 */
-	virtual void handleResponse(const Messaging::Message &aMessage);
-	//@}
-	/**
+		virtual void handleResponse(const Messaging::Message &aMessage);
+		//@}
+		/**
 			 * @name Debug functions
 			 */
-	//@{
-	/**
+		//@{
+		/**
 			 * Returns a 1-line description of the object
 			 */
-	virtual std::string asString() const;
-	/**
+		virtual std::string asString() const;
+		/**
 			 * Returns a description of the object with all data of the object usable for debugging
 			 */
-	std::string asCopyString() const;
-	//@}
+		std::string asCopyString() const;
+		//@}
 
-	/**
+		/**
 			 * @name The types of messages a Robot should understand
 			 */
-	virtual std::string asDebugString() const;
-	//@}
+		virtual std::string asDebugString() const;
+		//@}
 
-	/**
+		/**
 			 * @name The types of messages a Robot should understand
 			 */
-	//@{
-	enum MessageType
-	{
-		EchoRequest,
-		EchoResponse,
-		GetRobotRequest,
-		GetRobotResponse
+		//@{
+		enum MessageType
+		{
+			EchoRequest,
+			EchoResponse,
+			GetRobotRequest,
+			GetRobotResponse
+		};
+
+		void stopOtherRobot();
+
+		bool operator<(const Robot &r) const
+		{
+			return (this->name < r.name);
+		}
+
+		std::thread &getRobotThread();
+		Model::RobotPtr getOtherRobot(std::vector<Model::RobotPtr> allRobots);
+
+	protected:
+		/**
+			 *
+			 */
+		void drive(WayPointPtr aGoal);
+		/**
+			 *
+			 */
+		void calculateRoute(GoalPtr aGoal);
+		/**
+			 *
+			 */
+		bool arrived(WayPointPtr aGoal);
+		/**
+			 *
+			 */
+		bool collision_walls();
+		/**
+			 *
+			 */
+		bool collision_robot();
+
+	private:
+		std::string name;
+		bool stop;
+		Size size;
+		int collision_size;
+		Point position;
+
+		BoundedVector front;
+		float speed;
+
+		GoalPtr goal;
+		PathAlgorithm::AStar astar;
+		PathAlgorithm::Path path;
+
+		bool acting;
+		bool driving;
+		bool communicating;
+
+		std::thread robotThread;
+		mutable std::recursive_mutex robotMutex;
+
+		void sendCopyRobots();
 	};
-
-	void stopOtherRobot();
-
-	std::thread &getRobotThread();
-	Model::RobotPtr getOtherRobot(std::vector<Model::RobotPtr> allRobots);
-
-protected:
-	/**
-			 *
-			 */
-	void drive(WayPointPtr aGoal);
-	/**
-			 *
-			 */
-	void calculateRoute(GoalPtr aGoal);
-	/**
-			 *
-			 */
-	bool arrived(WayPointPtr aGoal);
-	/**
-			 *
-			 */
-	bool collision_walls();
-	/**
-			 *
-			 */
-	bool collision_robot();
-
-private:
-	std::string name;
-	bool stop;
-	Size size;
-	int collision_size;
-	Point position;
-
-	BoundedVector front;
-	float speed;
-
-	GoalPtr goal;
-	PathAlgorithm::AStar astar;
-	PathAlgorithm::Path path;
-
-	bool acting;
-	bool driving;
-	bool communicating;
-
-	std::thread robotThread;
-	mutable std::recursive_mutex robotMutex;
-
-	void sendCopyRobots();
-};
 } // namespace Model
 #endif // ROBOT_HPP_

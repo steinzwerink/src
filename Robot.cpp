@@ -476,6 +476,8 @@ namespace Model
 	/**
  *
  */
+
+
 	void Robot::drive(WayPointPtr aGoal)
 	{
 
@@ -520,9 +522,9 @@ namespace Model
 					Model::RobotPtr other_robot = getOtherRobot(robots);
 
 					sort(robots.begin(), robots.end());
-					
-					std::cout << "DE ROBOTS ZIJN: \n"<<robots[0]->asCopyString()  <<std::endl;
-					
+
+					std::cout << "DE ROBOTS ZIJN: \n"
+							  << robots[0]->asCopyString() << std::endl;
 
 					if (other_robot->getStop())
 					{
