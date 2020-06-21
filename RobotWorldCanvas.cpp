@@ -482,6 +482,18 @@ void RobotWorldCanvas::scenario_2_rhs(int aNumberOfWalls /*= 2*/)
 {
 	Model::RobotWorld::getRobotWorld().populateScenario_2_rhs(aNumberOfWalls);
 }
+void RobotWorldCanvas::scenario_3_lhs(int aNumberOfWalls /*= 2*/)
+{
+	Model::RobotWorld::getRobotWorld().populateScenario_3_lhs(aNumberOfWalls);
+}
+/**
+	 *
+	 */
+
+void RobotWorldCanvas::scenario_3_rhs(int aNumberOfWalls /*= 2*/)
+{
+	Model::RobotWorld::getRobotWorld().populateScenario_3_rhs(aNumberOfWalls);
+}
 
 /**
 	 *
@@ -1118,29 +1130,34 @@ void RobotWorldCanvas::handleMenu(const Point &UNUSEDPARAM(aScreenPoint))
 	Menu popupMenu;
 
 	popupMenu.Append(ID_ADD_ROBOT, _T( "Add robot"), _T( "ID_ADD_ROBOT2"));
-	Bind(wxEVT_COMMAND_MENU_SELECTED,
-		 [this](CommandEvent &anEvent) { this->OnAddRobot(anEvent); },
-		 ID_ADD_ROBOT);
+	Bind(
+		wxEVT_COMMAND_MENU_SELECTED,
+		[this](CommandEvent &anEvent) { this->OnAddRobot(anEvent); },
+		ID_ADD_ROBOT);
 
 	popupMenu.Append(ID_ADD_WAYPOINT, _T( "Add waypoint"), _T( "ID_ADD_WAYPOINT2"));
-	Bind(wxEVT_COMMAND_MENU_SELECTED,
-		 [this](CommandEvent &anEvent) { this->OnAddWayPoint(anEvent); },
-		 ID_ADD_WAYPOINT);
+	Bind(
+		wxEVT_COMMAND_MENU_SELECTED,
+		[this](CommandEvent &anEvent) { this->OnAddWayPoint(anEvent); },
+		ID_ADD_WAYPOINT);
 
 	popupMenu.Append(ID_ADD_GOAL, _T( "Add goal"), _T( "ID_ADD_GOAL2"));
-	Bind(wxEVT_COMMAND_MENU_SELECTED,
-		 [this](CommandEvent &anEvent) { this->OnAddGoal(anEvent); },
-		 ID_ADD_GOAL);
+	Bind(
+		wxEVT_COMMAND_MENU_SELECTED,
+		[this](CommandEvent &anEvent) { this->OnAddGoal(anEvent); },
+		ID_ADD_GOAL);
 
 	popupMenu.Append(ID_ADD_WALL, _T( "Add wall"), _T( "ID_ADD_WALL2"));
-	Bind(wxEVT_COMMAND_MENU_SELECTED,
-		 [this](CommandEvent &anEvent) { this->OnAddWall(anEvent); },
-		 ID_ADD_WALL);
+	Bind(
+		wxEVT_COMMAND_MENU_SELECTED,
+		[this](CommandEvent &anEvent) { this->OnAddWall(anEvent); },
+		ID_ADD_WALL);
 
 	popupMenu.Append(ID_WORLD_INFO, _T( "World info"), _T( "ID_WORLD_INFO2"));
-	Bind(wxEVT_COMMAND_MENU_SELECTED,
-		 [this](CommandEvent &anEvent) { this->OnWorldInfo(anEvent); },
-		 ID_WORLD_INFO);
+	Bind(
+		wxEVT_COMMAND_MENU_SELECTED,
+		[this](CommandEvent &anEvent) { this->OnWorldInfo(anEvent); },
+		ID_WORLD_INFO);
 
 	popupMenu.Append(wxID_ABOUT, _T( "About"), _T( "Show about dialog"));
 	PopupMenu(&popupMenu);
@@ -1156,42 +1173,49 @@ void RobotWorldCanvas::handleItemMenu(ShapePtr aSelectedShape,
 	if (std::dynamic_pointer_cast<RobotShape>(aSelectedShape))
 	{
 		popupMenu.Append(ID_EDIT_ROBOT, _T( "Edit robot"), _T( "ID_EDIT_ROBOT"));
-		Bind(wxEVT_COMMAND_MENU_SELECTED,
-			 [this](CommandEvent &anEvent) { this->OnEditRobot(anEvent); },
-			 ID_EDIT_ROBOT);
+		Bind(
+			wxEVT_COMMAND_MENU_SELECTED,
+			[this](CommandEvent &anEvent) { this->OnEditRobot(anEvent); },
+			ID_EDIT_ROBOT);
 		popupMenu.Append(ID_DELETE_ROBOT, _T( "Delete robot"), _T( "ID_DELETE_ROBOT"));
-		Bind(wxEVT_COMMAND_MENU_SELECTED,
-			 [this](CommandEvent &anEvent) { this->OnDeleteRobot(anEvent); },
-			 ID_DELETE_ROBOT);
+		Bind(
+			wxEVT_COMMAND_MENU_SELECTED,
+			[this](CommandEvent &anEvent) { this->OnDeleteRobot(anEvent); },
+			ID_DELETE_ROBOT);
 	}
 	else if (std::dynamic_pointer_cast<GoalShape>(aSelectedShape))
 	{
 		popupMenu.Append(ID_EDIT_GOAL, _T( "Edit goal"), _T( "ID_EDIT_GOAL"));
-		Bind(wxEVT_COMMAND_MENU_SELECTED,
-			 [this](CommandEvent &anEvent) { this->OnEditGoal(anEvent); },
-			 ID_EDIT_GOAL);
+		Bind(
+			wxEVT_COMMAND_MENU_SELECTED,
+			[this](CommandEvent &anEvent) { this->OnEditGoal(anEvent); },
+			ID_EDIT_GOAL);
 		popupMenu.Append(ID_DELETE_GOAL, _T( "Delete goal"), _T( "ID_DELETE_GOAL"));
-		Bind(wxEVT_COMMAND_MENU_SELECTED,
-			 [this](CommandEvent &anEvent) { this->OnDeleteGoal(anEvent); },
-			 ID_DELETE_GOAL);
+		Bind(
+			wxEVT_COMMAND_MENU_SELECTED,
+			[this](CommandEvent &anEvent) { this->OnDeleteGoal(anEvent); },
+			ID_DELETE_GOAL);
 	}
 	else if (std::dynamic_pointer_cast<WayPointShape>(aSelectedShape))
 	{
 		popupMenu.Append(ID_EDIT_WAYPOINT, _T( "Edit waypoint"), _T( "ID_EDIT_WAYPOINT"));
-		Bind(wxEVT_COMMAND_MENU_SELECTED,
-			 [this](CommandEvent &anEvent) { this->OnEditWayPoint(anEvent); },
-			 ID_EDIT_WAYPOINT);
+		Bind(
+			wxEVT_COMMAND_MENU_SELECTED,
+			[this](CommandEvent &anEvent) { this->OnEditWayPoint(anEvent); },
+			ID_EDIT_WAYPOINT);
 		popupMenu.Append(ID_DELETE_WAYPOINT, _T( "Delete waypoint"), _T( "ID_DELETE_WAYPOINT"));
-		Bind(wxEVT_COMMAND_MENU_SELECTED,
-			 [this](CommandEvent &anEvent) { this->OnDeleteWayPoint(anEvent); },
-			 ID_DELETE_WAYPOINT);
+		Bind(
+			wxEVT_COMMAND_MENU_SELECTED,
+			[this](CommandEvent &anEvent) { this->OnDeleteWayPoint(anEvent); },
+			ID_DELETE_WAYPOINT);
 	}
 	else if (std::dynamic_pointer_cast<WallShape>(aSelectedShape))
 	{
 		popupMenu.Append(ID_DELETE_WALL, _T( "Delete wall"), _T( "ID_DELETE_WALL"));
-		Bind(wxEVT_COMMAND_MENU_SELECTED,
-			 [this](CommandEvent &anEvent) { this->OnDeleteWall(anEvent); },
-			 ID_DELETE_WALL);
+		Bind(
+			wxEVT_COMMAND_MENU_SELECTED,
+			[this](CommandEvent &anEvent) { this->OnDeleteWall(anEvent); },
+			ID_DELETE_WALL);
 	}
 	else
 	{
@@ -1199,9 +1223,10 @@ void RobotWorldCanvas::handleItemMenu(ShapePtr aSelectedShape,
 	}
 
 	popupMenu.Append(ID_SHAPE_INFO, _T( "Show info"), _T( "ID_SHAPE_INFO"));
-	Bind(wxEVT_COMMAND_MENU_SELECTED,
-		 [this](CommandEvent &anEvent) { this->OnShapeInfo(anEvent); },
-		 ID_SHAPE_INFO);
+	Bind(
+		wxEVT_COMMAND_MENU_SELECTED,
+		[this](CommandEvent &anEvent) { this->OnShapeInfo(anEvent); },
+		ID_SHAPE_INFO);
 
 	popupMenu.Append(wxID_ABOUT, _T( "About"), _T( "Show about dialog"));
 	PopupMenu(&popupMenu);

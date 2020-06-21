@@ -169,20 +169,31 @@ public:
 			 * Asks the world to populates itself with scenario_1
 			 */
 	void scenario_1_lhs(int aNumberOfWalls);
-/**
+	/**
 	/**
 			 * Asks the world to populates itself with scenario_1
 			 */
 	void scenario_1_rhs(int aNumberOfWalls);
-/**
+	/**
 			 * Asks the world to populates itself with scenario_2
 			 */
 	void scenario_2_lhs(int aNumberOfWalls);
 
 	/**
-			 * Removes everything from the world
+			 * Asks the world to populates itself with scenario_3
 			 */
 	void scenario_2_rhs(int aNumberOfWalls);
+	/**
+			 * Asks the world to populates itself with scenario_3
+			 */
+	void scenario_3_lhs(int aNumberOfWalls);
+
+	/**
+			 * Removes everything from the world
+			 */
+	void scenario_3_rhs(int aNumberOfWalls);
+
+	/**
 
 	/**
 			 * Removes everything from the world

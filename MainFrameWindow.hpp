@@ -96,6 +96,8 @@ private:
 	void scenario_1_rhs(CommandEvent &(anEvent));
 	void scenario_2_lhs(CommandEvent &(anEvent));
 	void scenario_2_rhs(CommandEvent &(anEvent));
+	void scenario_3_lhs(CommandEvent &(anEvent));
+	void scenario_3_rhs(CommandEvent &(anEvent));
 	void OnScenario_3(CommandEvent &(anEvent));
 	void OnUnpopulate(CommandEvent &anEvent);
 	void OnStartListening(CommandEvent &anEvent);

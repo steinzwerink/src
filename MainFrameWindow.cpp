@@ -288,12 +288,12 @@ Panel *MainFrameWindow::initialiseButtonPanel()
 			   GBSpan(1, 1), EXPAND);
 	sizer->Add(makeButton(panel,
 						  "Scenario_3_lhs",
-						  [this](CommandEvent &anEvent) { this->OnUnpopulate(anEvent); }),
+						  [this](CommandEvent &anEvent) { this->scenario_3_lhs(anEvent); }),
 			   GBPosition(0, 3),
 			   GBSpan(1, 1), EXPAND);
 	sizer->Add(makeButton(panel,
 						  "Scenario_3_rhs",
-						  [this](CommandEvent &anEvent) { this->OnUnpopulate(anEvent); }),
+						  [this](CommandEvent &anEvent) { this->scenario_3_rhs(anEvent); }),
 			   GBPosition(1, 3),
 			   GBSpan(1, 1), EXPAND);
 
@@ -434,6 +434,14 @@ void MainFrameWindow::scenario_2_lhs(CommandEvent &UNUSEDPARAM(anEvent))
 void MainFrameWindow::scenario_2_rhs(CommandEvent &UNUSEDPARAM(anEvent))
 {
 	robotWorldCanvas->scenario_2_rhs(6);
+}
+void MainFrameWindow::scenario_3_lhs(CommandEvent &UNUSEDPARAM(anEvent))
+{
+	robotWorldCanvas->scenario_3_lhs(6);
+}
+void MainFrameWindow::scenario_3_rhs(CommandEvent &UNUSEDPARAM(anEvent))
+{
+	robotWorldCanvas->scenario_3_rhs(6);
 }
 /**
 	 *
