@@ -106,6 +106,20 @@ Size Robot::getSize() const
 /**
 	 *
 	 */
+bool Robot::getStop() const
+{
+	return stop;
+}
+/**
+	 *
+	 */
+void Robot::setStop(const bool aStop) 
+{
+	stop = aStop;
+}
+/**
+	 *
+	 */
 void Robot::setSize(const Size &aSize,
 					bool aNotifyObservers /*= true*/)
 {

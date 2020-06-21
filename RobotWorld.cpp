@@ -464,6 +464,7 @@ namespace Model
 				{
 					robot->setPosition(Point(x, y), true);
 					robot->setFront(BoundedVector(lx, ly), true);
+
 				}
 			}
 
@@ -496,7 +497,7 @@ namespace Model
 			// }
 			break;
 		}
-
+					//robot->setStopped();
 		default:
 			break;
 		}
