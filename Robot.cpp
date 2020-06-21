@@ -624,28 +624,28 @@ namespace Model
 
 		Model::RobotPtr other_robot = getOtherRobot(robots);
 
-		// if (other_robot)
-		// {
-		// 	std::vector<Model::RobotPtr>::iterator it = std::find(robots.begin(), robots.end(), other_robot);
-		// 	robots.erase(it);
-		// }
-
-		//for (const auto &robot : robots)
-		//{
-
-		//if (name != robot->getName())
-		//{
-
-		int distanceX = abs(position.x - other_robot->getPosition().x);
-		int distanceY = abs(position.y - other_robot->getPosition().y);
-
-		if (distanceX < collision_size && distanceY < collision_size)
+		if (other_robot)
 		{
-			return true;
+			std::vector<Model::RobotPtr>::iterator it = std::find(robots.begin(), robots.end(), other_robot);
+			robots.erase(it);
 		}
-		//}
-		//return false;
-		//}
+		std::cout << "DE HUIDIGE GROOTTE VAN DE ROBOTS IS:   " << robots.size() << std::endl;
+		for (const auto &robot : robots)
+		{
+
+			if (name != robot->getName())
+			{
+
+				int distanceX = abs(position.x - other_robot->getPosition().x);
+				int distanceY = abs(position.y - other_robot->getPosition().y);
+
+				if (distanceX < collision_size && distanceY < collision_size)
+				{
+					return true;
+				}
+			}
+			return false;
+		}
 	}
 
 	Model::RobotPtr Robot::getOtherRobot(std::vector<Model::RobotPtr> allRobots)
