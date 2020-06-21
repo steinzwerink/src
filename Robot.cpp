@@ -648,10 +648,8 @@ bool Robot::collision_robot()
 		std::vector<Model::RobotPtr>::iterator it = std::find(robots.begin(), robots.end(), myRobot);
 		robots.erase(it);
 	}
-	std::cout << "DE HUIDIGE GROOTTE VAN DE ROBOTS IS:   " << robots.size() << std::endl;
 	for (const auto &robot : robots)
 	{
-		std::cout << "DE HUIDIGE ROBOT IS:   " << robot->getName() << std::endl;
 
 		if (name != robot->getName())
 		{
@@ -680,7 +678,6 @@ Model::RobotPtr Robot::getOtherRobot(std::vector<Model::RobotPtr> allRobots)
 			otherRobot = robot;
 		}
 	}
-	std::cout << "OTHER ROBOT = " << otherRobot->asCopyString() << std::endl;
 	return otherRobot;
 }
 
