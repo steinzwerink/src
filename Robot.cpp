@@ -469,8 +469,23 @@ namespace Model
 		{
 			for (std::shared_ptr<AbstractSensor> sensor : sensors)
 			{
-				//sensor->setOn();
+				Application::Logger::log(__PRETTY_FUNCTION__ + std::string(": arrived"));
+				sendCopyRobots();
+				notifyObservers();
+				driving = false;
+				break;
 			}
+			if (collision_robot())
+			{
+				Application::Logger::log(__PRETTY_FUNCTION__ + std::string(":collision with robot"));
+				sendCopyRobots();
+				notifyObservers();
+				std::this_thread::sleep_for(std::chrono::milliseconds(5000));
+				stopDriving();
+
+				calculateRoute(goal);
+				driving = true;
+				drive(goal);
 
 			if (speed == 0.0)
 			{
@@ -480,38 +495,7 @@ namespace Model
 			unsigned pathPoint = 0;
 			while (position.x > 0 && position.x < 500 && position.y > 0 && position.y < 500 && pathPoint < path.size())
 			{
-
-				const PathAlgorithm::Vertex &vertex = path[pathPoint += static_cast<int>(speed)];
-				front = BoundedVector(vertex.asPoint(), position);
-				position.x = vertex.x;
-				position.y = vertex.y;
-				if (arrived(aGoal))
-				{
-					Application::Logger::log(__PRETTY_FUNCTION__ + std::string(": arrived"));
-					notifyObservers();
-					driving = false;
-					break;
-				}
-				if (collision_robot())
-				{
-					Application::Logger::log(__PRETTY_FUNCTION__ + std::string(":collision with robot"));
-					notifyObservers();
-					std::this_thread::sleep_for(std::chrono::milliseconds(5000));
-					stopDriving();
-
-					calculateRoute(goal);
-					driving = true;
-					drive(goal);
-
-					break;
-				}
-				if (collision_walls())
-				{
-					Application::Logger::log(__PRETTY_FUNCTION__ + std::string(":collision with wall"));
-					notifyObservers();
-					break;
-				}
-
+				Application::Logger::log(__PRETTY_FUNCTION__ + std::string(":collision with wall"));
 				sendCopyRobots();
 				notifyObservers();
 

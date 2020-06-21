@@ -411,7 +411,7 @@ namespace Application
 	}
 	void MainFrameWindow::scenario_1_lhs(CommandEvent &UNUSEDPARAM(anEvent))
 	{
-		robotWorldCanvas->scenario_1_lhs(4);
+		robotWorldCanvas->scenario_1_lhs(8);
 	}
 	void MainFrameWindow::scenario_1_rhs(CommandEvent &UNUSEDPARAM(anEvent))
 	{
