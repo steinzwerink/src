@@ -269,6 +269,7 @@ namespace Model
 		};
 
 		std::thread &getRobotThread();
+		Model::RobotPtr getOtherRobot(std::vector<Model::RobotPtr> allRobots);
 
 	protected:
 		/**
