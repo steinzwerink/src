@@ -286,7 +286,7 @@ namespace Model
 
 		std::thread &getRobotThread();
 
-		void stopOtherRobot(std::vector<Model::RobotPtr> allRobots, Model::RobotPtr myRobot);
+		void stopOtherRobot(std::vector<Model::RobotPtr> allRobots, Model::RobotPtr myRobot, Model::RobotPtr otherRobot);
 		Model::RobotPtr getOtherRobot(std::vector<Model::RobotPtr> allRobots, Model::RobotPtr myRobot);
 
 	protected:
@@ -317,6 +317,7 @@ namespace Model
 		Size size;
 		int collision_size;
 		Point position;
+		bool isCopied;
 
 		BoundedVector front;
 		float speed;

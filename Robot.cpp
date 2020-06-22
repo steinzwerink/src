@@ -116,7 +116,6 @@ namespace Model
 	void Robot::setStop(const bool aStop)
 	{
 		stop = aStop;
-		std::this_thread::sleep_for(std::chrono::milliseconds(5000));
 	}
 	/**
 	 *
@@ -471,6 +470,7 @@ namespace Model
 
 		return os.str();
 	}
+
 	/**
  *
  */
@@ -493,6 +493,12 @@ namespace Model
 				speed = 10.0;
 			}
 
+			std::vector<Model::RobotPtr> robots = RobotWorld::getRobotWorld().getRobots();
+
+			sort(robots.begin(), robots.end(), compareRobots());
+			auto myRobot = robots[0];
+			auto otherRobot = robots[1];
+
 			unsigned pathPoint = 0;
 			while (position.x > 0 && position.x < 500 && position.y > 0 && position.y < 500 && pathPoint < path.size())
 			{
@@ -510,21 +516,21 @@ namespace Model
 					break;
 				}
 
-				std::vector<Model::RobotPtr> robots = RobotWorld::getRobotWorld().getRobots();
-				auto myRobot = RobotWorld::getRobotWorld().getRobot(this->name);
-				auto otherRobot = robots[1];
-
-				sort(robots.begin(), robots.end(), compareRobots());
-
 				if (collision_robot(robots))
 				{
 					Application::Logger::log(__PRETTY_FUNCTION__ + std::string(":collision with robot"));
 					sendCopyRobots();
 					notifyObservers();
 
-					stopOtherRobot(robots, myRobot);
+					stopOtherRobot(robots, myRobot, otherRobot);
 
-					otherRobot->stopDriving();
+					if (this->getStop() == true)
+					{
+
+						this->stopDriving();
+						std::this_thread::sleep_for(std::chrono::milliseconds(5000));
+						
+					}
 
 					calculateRoute(goal);
 					//	recalculatedNewPath = true;
@@ -568,7 +574,7 @@ namespace Model
 		}
 	}
 
-	void Robot::stopOtherRobot(std::vector<Model::RobotPtr> allRobots, Model::RobotPtr myRobot)
+	void Robot::stopOtherRobot(std::vector<Model::RobotPtr> allRobots, Model::RobotPtr myRobot, Model::RobotPtr otherRobot)
 	{
 		std::string remoteIpAdres = "localhost";
 		std::string remotePort = "12345";
@@ -586,9 +592,6 @@ namespace Model
 			Model::RobotWorld::getRobotWorld().getRobotWorldPtr();
 		if (worldptr)
 		{
-
-			Model::RobotPtr otherRobot = getOtherRobot(allRobots, myRobot);
-
 
 			Messaging::Client client(remoteIpAdres, remotePort, worldptr);
 			Messaging::Message message(
