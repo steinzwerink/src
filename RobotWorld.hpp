@@ -204,7 +204,7 @@ public:
 		Wall
 	};
 
-	void fillWorld(std::string &messageBody);
+	void setWorld(std::string &messageBody);
 	RobotWorldPtr getRobotWorldPtr()
 	{
 		return robotWorldPtr;
