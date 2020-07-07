@@ -522,16 +522,22 @@ void Robot::drive(WayPointPtr aGoal)
 				sendCopyRobots();
 				notifyObservers();
 
-				//stopOtherRobot(robots, myRobot, otherRobot);
+					stopOtherRobot(robots, myRobot, otherRobot);
 
-				myRobot->stopDriving();
-				std::this_thread::sleep_for(std::chrono::milliseconds(5000));
+				if (this->getStop() == true)
+				{
 
-				calculateRoute(goal);
-				//	recalculatedNewPath = true;
-				driving = true;
-				drive(goal);
+					this->stopDriving();
+					std::this_thread::sleep_for(std::chrono::milliseconds(5000));
+				}
 
+				if (this->getStop() == false)
+				{
+					calculateRoute(goal);
+					//	recalculatedNewPath = true;
+					driving = true;
+					drive(goal);
+				}
 				break;
 			}
 			if (collision_walls())
