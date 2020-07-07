@@ -336,7 +336,7 @@ namespace Model
 		bool acting;
 		bool driving;
 		bool communicating;
-		bool restarted;
+		bool restarted = false;
 
 		std::thread robotThread;
 		mutable std::recursive_mutex robotMutex;

@@ -524,6 +524,7 @@ void Robot::drive(WayPointPtr aGoal)
 			}
 			if (this->restarted == true)
 			{
+				std::cout<<this->name << " Restarted " <<std::endl;
 				calculateRoute(goal);
 				//	recalculatedNewPath = true;
 				driving = true;
