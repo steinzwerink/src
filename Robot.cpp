@@ -587,6 +587,7 @@ void Robot::restartOtherRobot()
 {
 	std::string remoteIpAdres = "localhost";
 	std::string remotePort = "12345";
+std::cout << "Hier ben ik 2"<< std::endl;
 
 	if (Application::MainApplication::isArgGiven("-remote_ip"))
 	{
@@ -596,6 +597,7 @@ void Robot::restartOtherRobot()
 	{
 		remotePort = Application::MainApplication::getArg("-remote_port").value;
 	}
+std::cout << "Hier ben ik 3"<< std::endl;
 
 	Model::RobotWorldPtr worldptr =
 		Model::RobotWorld::getRobotWorld().getRobotWorldPtr();
@@ -609,6 +611,8 @@ void Robot::restartOtherRobot()
 
 		client.dispatchMessage(message);
 	}
+	std::cout << "Hier ben ik 4"<< std::endl;
+
 }
 
 void Robot::restartTest()
@@ -618,10 +622,10 @@ void Robot::restartTest()
 	sort(robots.begin(), robots.end(), compareRobots());
 	auto myRobot = robots[0];
 	auto otherRobot = robots[1];
-std::cout << "Hier ben ik 2"<< std::endl;
+std::cout << "Hier ben ik 5"<< std::endl;
 	if (otherRobot->getRestarted() == true)
 	{
-		std::cout << "Hier ben ik 3"<< std::endl;
+		std::cout << "Hier ben ik 6"<< std::endl;
 		otherRobot->calculateRoute(otherRobot->goal);
 		otherRobot->driving = true;
 		otherRobot->drive(otherRobot->goal);
