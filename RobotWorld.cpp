@@ -302,11 +302,14 @@ namespace Model
 
 	void RobotWorld::populateScenario_1_lhs(int aNumberOfWalls)
 	{
-		RobotWorld::getRobotWorld().newRobot("Stein", Point(62, 205), false);
+		RobotWorld::getRobotWorld().newRobot("Stein", Point(62, 255), false);
 
-		static Point coordinates[] = {Point(0, 250), Point(150, 250), Point(150, 200), Point(150, 300),
-									  Point(600, 250), Point(350, 250), Point(350, 200), Point(350, 300), Point(500, 0), Point(500, 500), Point(0, 500), Point(500, 500),
-									  Point(0, 0), Point(0, 600), Point(0, 0), Point(600, 0)};
+		static Point coordinates[] = {Point(0, 190), Point(186, 190), Point(186, 190), Point(186, 0),
+									  Point(335, 0), Point(335, 193), Point(335, 193), Point(500, 193),
+									   Point(500, 0), Point(500, 500), Point(0, 500), Point(500, 500),
+									  Point(0, 0), Point(0, 600), Point(0, 0), Point(600, 0), Point(0, 335),
+									   Point(184, 335), Point(335, 335), Point(500, 335), Point(335, 335),
+									    Point(335, 500), Point(184, 335), Point(184, 500)};
 
 		for (int i = 0; i < 2 * aNumberOfWalls; i += 2)
 		{
@@ -319,9 +322,9 @@ namespace Model
 
 	void RobotWorld::populateScenario_1_rhs(int aNumberOfWalls)
 	{
-		RobotWorld::getRobotWorld().newRobot("Thomas", Point(75, 335), false);
+		RobotWorld::getRobotWorld().newRobot("Thomas", Point(262, 354), false);
 
-		RobotWorld::getRobotWorld().newGoal("Thomas", Point(422, 161), false);
+		RobotWorld::getRobotWorld().newGoal("Thomas", Point(258, 37), false);
 
 		notifyObservers();
 	}

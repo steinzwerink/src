@@ -421,7 +421,7 @@ void MainFrameWindow::OnPopulate(CommandEvent &UNUSEDPARAM(anEvent))
 }
 void MainFrameWindow::scenario_1_lhs(CommandEvent &UNUSEDPARAM(anEvent))
 {
-	robotWorldCanvas->scenario_1_lhs(8);
+	robotWorldCanvas->scenario_1_lhs(16);
 }
 void MainFrameWindow::scenario_1_rhs(CommandEvent &UNUSEDPARAM(anEvent))
 {

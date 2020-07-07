@@ -535,9 +535,9 @@ void Robot::drive(WayPointPtr aGoal)
 				if (this->getStop() == true)
 				{
 
-					this->stopDriving();
+					otherRobot->stopDriving();
 					std::this_thread::sleep_for(std::chrono::milliseconds(5000));
-					this->stop = true;
+					otherRobot->setStop(false);
 				}
 
 				if (this->getStop() == false )
