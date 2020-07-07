@@ -518,7 +518,7 @@ void Robot::drive(WayPointPtr aGoal)
 				sendCopyRobots();
 				restartTest();
 				//restartOtherRobot();
-				
+
 				notifyObservers();
 				driving = false;
 				break;
@@ -532,14 +532,14 @@ void Robot::drive(WayPointPtr aGoal)
 
 			    stopOtherRobot();
 
-				if (this->getStop() == true)
+				if (this->getStop() == true && restarted == false)
 				{
 
 					this->stopDriving();
 					//std::this_thread::sleep_for(std::chrono::milliseconds(5000));
 				}
 
-				if (this->getStop() == false)
+				if (this->getStop() == false && restarted == true)
 				{
 					calculateRoute(goal);
 					//	recalculatedNewPath = true;
@@ -619,14 +619,9 @@ void Robot::restartTest()
 	sort(robots.begin(), robots.end(), compareRobots());
 	auto myRobot = robots[0];
 	auto otherRobot = robots[1];
-
-	if (otherRobot->getRestarted() == true)
-	{
-		otherRobot->calculateRoute(otherRobot->goal);
-		otherRobot->driving = true;
-		otherRobot->drive(otherRobot->goal);
-		otherRobot->setRestarted(false);
-	}
+	otherRobot->setRestarted(true);
+	otherRobot->setStop(false);
+	otherRobot->drive(otherRobot->goal);
 }
 
 void Robot::stopOtherRobot()
