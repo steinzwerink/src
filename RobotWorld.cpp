@@ -548,7 +548,7 @@ namespace Model
 			auto myRobot = robots[0];
 			auto otherRobot = robots[1];
 
-			myRobot->setStop(false);
+			otherRobot->setStop(false);
 
 			break;
 		}
