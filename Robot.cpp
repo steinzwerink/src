@@ -624,6 +624,7 @@ void Robot::restartTest()
 		otherRobot->calculateRoute(otherRobot->goal);
 		otherRobot->driving = true;
 		otherRobot->drive(otherRobot->goal);
+		otherRobot->setRestarted(false);
 	}
 }
 
