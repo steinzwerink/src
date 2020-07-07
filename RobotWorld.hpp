@@ -192,7 +192,8 @@ public:
 		StartRobotRequest,
 		StartRobotResponse,
 		StopRobotRequest,
-		StopRobotResponse
+		StopRobotResponse,
+		RestartRobotRequest
 
 	};
 

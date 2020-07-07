@@ -286,7 +286,8 @@ namespace Model
 
 		std::thread &getRobotThread();
 
-		void stopOtherRobot(std::vector<Model::RobotPtr> allRobots, Model::RobotPtr myRobot, Model::RobotPtr otherRobot);
+		void stopOtherRobot();
+		void restartOtherRobot();
 		Model::RobotPtr getOtherRobot(std::vector<Model::RobotPtr> allRobots, Model::RobotPtr myRobot);
 
 	protected:

@@ -511,6 +511,7 @@ void Robot::drive(WayPointPtr aGoal)
 			{
 				Application::Logger::log(__PRETTY_FUNCTION__ + std::string(": arrived"));
 				sendCopyRobots();
+				restartOtherRobot();
 				notifyObservers();
 				driving = false;
 				break;
@@ -522,7 +523,7 @@ void Robot::drive(WayPointPtr aGoal)
 				sendCopyRobots();
 				notifyObservers();
 
-					stopOtherRobot(robots, myRobot, otherRobot);
+			    stopOtherRobot();
 
 				if (this->getStop() == true)
 				{
@@ -575,7 +576,35 @@ void Robot::drive(WayPointPtr aGoal)
 	}
 }
 
-void Robot::stopOtherRobot(std::vector<Model::RobotPtr> allRobots, Model::RobotPtr myRobot, Model::RobotPtr otherRobot)
+void Robot::restartOtherRobot()
+{
+	std::string remoteIpAdres = "localhost";
+	std::string remotePort = "12345";
+
+	if (Application::MainApplication::isArgGiven("-remote_ip"))
+	{
+		remoteIpAdres = Application::MainApplication::getArg("-remote_ip").value;
+	}
+	if (Application::MainApplication::isArgGiven("-remote_port"))
+	{
+		remotePort = Application::MainApplication::getArg("-remote_port").value;
+	}
+
+	Model::RobotWorldPtr worldptr =
+		Model::RobotWorld::getRobotWorld().getRobotWorldPtr();
+	if (worldptr)
+	{
+
+		Messaging::Client client(remoteIpAdres, remotePort, worldptr);
+		Messaging::Message message(
+			Model::RobotWorld::MessageType::RestartRobotRequest,
+			"Test");
+
+		client.dispatchMessage(message);
+	}
+}
+
+void Robot::stopOtherRobot()
 {
 	std::string remoteIpAdres = "localhost";
 	std::string remotePort = "12345";

@@ -532,7 +532,23 @@ namespace Model
 			auto myRobot = robots[0];
 			auto otherRobot = robots[1];
 
-			myRobot->setStop(true);
+			otherRobot->setStop(true);
+
+			break;
+		}
+
+		case RestartRobotRequest:
+		{
+			Application::Logger::log(
+				__PRETTY_FUNCTION__ + std::string(": StopRequest"));
+
+			std::vector<Model::RobotPtr> robots = RobotWorld::getRobotWorld().getRobots();
+
+			sort(robots.begin(), robots.end(), Robot::compareRobots());
+			auto myRobot = robots[0];
+			auto otherRobot = robots[1];
+
+			myRobot->setStop(false);
 
 			break;
 		}
