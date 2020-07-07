@@ -290,6 +290,12 @@ namespace Model
 		void restartOtherRobot();
 		Model::RobotPtr getOtherRobot(std::vector<Model::RobotPtr> allRobots, Model::RobotPtr myRobot);
 
+		void setRestarted(bool iRestarted);
+		bool getRestarted()
+		{
+			return restarted;
+		}
+
 	protected:
 		/**
 			 *
@@ -330,6 +336,7 @@ namespace Model
 		bool acting;
 		bool driving;
 		bool communicating;
+		bool restarted;
 
 		std::thread robotThread;
 		mutable std::recursive_mutex robotMutex;

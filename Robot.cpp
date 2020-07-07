@@ -471,6 +471,11 @@ std::string Robot::asCopyString() const
 	return os.str();
 }
 
+void Robot::setRestarted(bool iRestarted)
+{
+	restarted = iRestarted;
+}
+
 /**
  *
  */
@@ -502,7 +507,7 @@ void Robot::drive(WayPointPtr aGoal)
 		unsigned pathPoint = 0;
 		while (position.x > 0 && position.x < 500 && position.y > 0 && position.y < 500 && pathPoint < path.size())
 		{
-
+			
 			const PathAlgorithm::Vertex &vertex = path[pathPoint += static_cast<int>(speed)];
 			front = BoundedVector(vertex.asPoint(), position);
 			position.x = vertex.x;
@@ -512,9 +517,17 @@ void Robot::drive(WayPointPtr aGoal)
 				Application::Logger::log(__PRETTY_FUNCTION__ + std::string(": arrived"));
 				sendCopyRobots();
 				restartOtherRobot();
+				
 				notifyObservers();
 				driving = false;
 				break;
+			}
+			if (this->restarted == true)
+			{
+				calculateRoute(goal);
+				//	recalculatedNewPath = true;
+				driving = true;
+				drive(goal);
 			}
 
 			if (collision_robot(robots))

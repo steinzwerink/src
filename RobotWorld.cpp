@@ -549,6 +549,7 @@ namespace Model
 			auto otherRobot = robots[1];
 
 			otherRobot->setStop(false);
+			otherRobot->setRestarted(true);
 
 			break;
 		}
