@@ -516,7 +516,8 @@ void Robot::drive(WayPointPtr aGoal)
 			{
 				Application::Logger::log(__PRETTY_FUNCTION__ + std::string(": arrived"));
 				sendCopyRobots();
-				restartOtherRobot();
+				restartTest();
+				//restartOtherRobot();
 				
 				notifyObservers();
 				driving = false;
@@ -535,7 +536,7 @@ void Robot::drive(WayPointPtr aGoal)
 				{
 
 					this->stopDriving();
-					std::this_thread::sleep_for(std::chrono::milliseconds(5000));
+					//std::this_thread::sleep_for(std::chrono::milliseconds(5000));
 				}
 
 				if (this->getStop() == false)
@@ -618,10 +619,9 @@ void Robot::restartTest()
 	sort(robots.begin(), robots.end(), compareRobots());
 	auto myRobot = robots[0];
 	auto otherRobot = robots[1];
-std::cout << "Hier ben ik 5"<< std::endl;
+
 	if (otherRobot->getRestarted() == true)
 	{
-		std::cout << "Hier ben ik 6"<< std::endl;
 		otherRobot->calculateRoute(otherRobot->goal);
 		otherRobot->driving = true;
 		otherRobot->drive(otherRobot->goal);
