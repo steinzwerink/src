@@ -517,7 +517,6 @@ void Robot::drive(WayPointPtr aGoal)
 				Application::Logger::log(__PRETTY_FUNCTION__ + std::string(": arrived"));
 				sendCopyRobots();
 				restartOtherRobot();
-				std::cout << "Hier ben ik 0"<< std::endl;
 				
 				notifyObservers();
 				driving = false;
@@ -587,7 +586,6 @@ void Robot::restartOtherRobot()
 {
 	std::string remoteIpAdres = "localhost";
 	std::string remotePort = "12345";
-std::cout << "Hier ben ik 2"<< std::endl;
 
 	if (Application::MainApplication::isArgGiven("-remote_ip"))
 	{
@@ -597,7 +595,6 @@ std::cout << "Hier ben ik 2"<< std::endl;
 	{
 		remotePort = Application::MainApplication::getArg("-remote_port").value;
 	}
-std::cout << "Hier ben ik 3"<< std::endl;
 
 	Model::RobotWorldPtr worldptr =
 		Model::RobotWorld::getRobotWorld().getRobotWorldPtr();
@@ -611,7 +608,6 @@ std::cout << "Hier ben ik 3"<< std::endl;
 
 		client.dispatchMessage(message);
 	}
-	std::cout << "Hier ben ik 4"<< std::endl;
 
 }
 

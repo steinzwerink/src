@@ -539,6 +539,8 @@ namespace Model
 
 		case RestartRobotRequest:
 		{
+			std::cout << "Hier ben ik in de request"<< std::endl;
+
 			Application::Logger::log(
 				__PRETTY_FUNCTION__ + std::string(": StopRequest"));
 
@@ -547,7 +549,6 @@ namespace Model
 			sort(robots.begin(), robots.end(), Robot::compareRobots());
 			auto myRobot = robots[0];
 			auto otherRobot = robots[1];
-std::cout << "Hier ben ik 1"<< std::endl;
 			otherRobot->setStop(false);
 			otherRobot->setRestarted(true);
 			otherRobot->restartTest();
