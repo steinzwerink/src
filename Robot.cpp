@@ -517,18 +517,18 @@ void Robot::drive(WayPointPtr aGoal)
 				Application::Logger::log(__PRETTY_FUNCTION__ + std::string(": arrived"));
 				sendCopyRobots();
 				restartOtherRobot();
+
+			if (otherRobot->restarted == true)
+			{
+				std::cout<<this->name << " Restarted " <<std::endl;
+				calculateRoute(goal);
+				driving = true;
+				drive(goal);
+			}
 				
 				notifyObservers();
 				driving = false;
 				break;
-			}
-			if (this->restarted == true)
-			{
-				std::cout<<this->name << " Restarted " <<std::endl;
-				calculateRoute(goal);
-				//	recalculatedNewPath = true;
-				driving = true;
-				drive(goal);
 			}
 
 			if (collision_robot(robots))
