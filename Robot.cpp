@@ -522,22 +522,16 @@ void Robot::drive(WayPointPtr aGoal)
 				sendCopyRobots();
 				notifyObservers();
 
-				//	stopOtherRobot(robots, myRobot, otherRobot);
+				//stopOtherRobot(robots, myRobot, otherRobot);
 
-				if (this->getStop() == true)
-				{
+				myRobot->stopDriving();
+				std::this_thread::sleep_for(std::chrono::milliseconds(5000));
 
-					this->stopDriving();
-					std::this_thread::sleep_for(std::chrono::milliseconds(5000));
-				}
+				calculateRoute(goal);
+				//	recalculatedNewPath = true;
+				driving = true;
+				drive(goal);
 
-				if (this->getStop() == false)
-				{
-					calculateRoute(goal);
-					//	recalculatedNewPath = true;
-					driving = true;
-					drive(goal);
-				}
 				break;
 			}
 			if (collision_walls())
@@ -598,7 +592,7 @@ void Robot::stopOtherRobot(std::vector<Model::RobotPtr> allRobots, Model::RobotP
 		Messaging::Message message(
 			Model::RobotWorld::MessageType::StopRobotRequest,
 			"Test");
-		message.setBody(otherRobot->getName());
+
 		client.dispatchMessage(message);
 	}
 }
