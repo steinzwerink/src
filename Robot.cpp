@@ -522,7 +522,7 @@ namespace Model
 					sendCopyRobots();
 					notifyObservers();
 
-					stopOtherRobot(robots, myRobot, otherRobot);
+				//	stopOtherRobot(robots, myRobot, otherRobot);
 
 					if (this->getStop() == true)
 					{
