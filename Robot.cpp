@@ -516,7 +516,7 @@ void Robot::drive(WayPointPtr aGoal)
 			{
 				Application::Logger::log(__PRETTY_FUNCTION__ + std::string(": arrived"));
 				sendCopyRobots();
-				restartTest();
+				//restartTest();
 				//restartOtherRobot();
 
 				notifyObservers();
@@ -532,14 +532,15 @@ void Robot::drive(WayPointPtr aGoal)
 
 			    stopOtherRobot();
 
-				if (this->getStop() == true && restarted == false)
+				if (this->getStop() == true)
 				{
 
 					this->stopDriving();
-					//std::this_thread::sleep_for(std::chrono::milliseconds(5000));
+					std::this_thread::sleep_for(std::chrono::milliseconds(5000));
+					this->stop = true;
 				}
 
-				if (this->getStop() == false && restarted == false)
+				if (this->getStop() == false )
 				{
 					calculateRoute(goal);
 					//	recalculatedNewPath = true;
@@ -547,13 +548,6 @@ void Robot::drive(WayPointPtr aGoal)
 					drive(goal);
 				}
 
-				if (this->getStop() == false && restarted == true)
-				{
-					calculateRoute(goal);
-					//	recalculatedNewPath = true;
-					driving = true;
-					drive(goal);
-				}
 				break;
 			}
 			if (collision_walls())
