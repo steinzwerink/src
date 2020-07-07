@@ -295,6 +295,7 @@ namespace Model
 		{
 			return restarted;
 		}
+		void restartTest();
 
 	protected:
 		/**
@@ -342,6 +343,7 @@ namespace Model
 		mutable std::recursive_mutex robotMutex;
 
 		void sendCopyRobots();
+		
 	};
 } // namespace Model
 #endif // ROBOT_HPP_

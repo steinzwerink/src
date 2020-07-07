@@ -550,6 +550,7 @@ namespace Model
 
 			otherRobot->setStop(false);
 			otherRobot->setRestarted(true);
+			otherRobot->restartTest();
 
 			break;
 		}

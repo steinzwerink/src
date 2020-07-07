@@ -517,14 +517,6 @@ void Robot::drive(WayPointPtr aGoal)
 				Application::Logger::log(__PRETTY_FUNCTION__ + std::string(": arrived"));
 				sendCopyRobots();
 				restartOtherRobot();
-
-			if (otherRobot->restarted == true)
-			{
-				std::cout<<this->name << " Restarted " <<std::endl;
-				otherRobot->calculateRoute(otherRobot->goal);
-				otherRobot->driving = true;
-				otherRobot->drive(otherRobot->goal);
-			}
 				
 				notifyObservers();
 				driving = false;
@@ -615,6 +607,23 @@ void Robot::restartOtherRobot()
 			"Test");
 
 		client.dispatchMessage(message);
+	}
+}
+
+void Robot::restartTest()
+{
+	std::vector<Model::RobotPtr> robots = RobotWorld::getRobotWorld().getRobots();
+
+	sort(robots.begin(), robots.end(), compareRobots());
+	auto myRobot = robots[0];
+	auto otherRobot = robots[1];
+
+	if (otherRobot->getRestarted() == true)
+	{
+		std::cout << this->name << " Restarted " << std::endl;
+		otherRobot->calculateRoute(otherRobot->goal);
+		otherRobot->driving = true;
+		otherRobot->drive(otherRobot->goal);
 	}
 }
 
