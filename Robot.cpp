@@ -539,6 +539,14 @@ void Robot::drive(WayPointPtr aGoal)
 					//std::this_thread::sleep_for(std::chrono::milliseconds(5000));
 				}
 
+				if (this->getStop() == false && restarted == false)
+				{
+					calculateRoute(goal);
+					//	recalculatedNewPath = true;
+					driving = true;
+					drive(goal);
+				}
+
 				if (this->getStop() == false && restarted == true)
 				{
 					calculateRoute(goal);
