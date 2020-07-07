@@ -521,9 +521,9 @@ void Robot::drive(WayPointPtr aGoal)
 			if (otherRobot->restarted == true)
 			{
 				std::cout<<this->name << " Restarted " <<std::endl;
-				calculateRoute(goal);
-				driving = true;
-				drive(goal);
+				otherRobot->calculateRoute(otherRobot->goal);
+				otherRobot->driving = true;
+				otherRobot->drive(otherRobot->goal);
 			}
 				
 				notifyObservers();
