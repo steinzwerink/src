@@ -315,7 +315,7 @@ namespace Model
 		{
 			RobotWorld::getRobotWorld().newWall(coordinates[i], coordinates[i + 1], false);
 		}
-		RobotWorld::getRobotWorld().newGoal("Stein", Point(429, 281), false);
+		RobotWorld::getRobotWorld().newGoal("Stein", Point(429, 258), false);
 
 		notifyObservers();
 	}
