@@ -348,7 +348,7 @@ namespace Model
 	}
 	void RobotWorld::populateScenario_2_rhs(int aNumberOfWalls)
 	{
-		RobotWorld::getRobotWorld().newRobot("Thomas", Point(460, 354), false);
+		RobotWorld::getRobotWorld().newRobot("Thomas", Point(460, 374), false);
 
 		RobotWorld::getRobotWorld().newGoal("Thomas", Point(462, 260), false);
 
