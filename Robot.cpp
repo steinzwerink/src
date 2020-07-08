@@ -532,7 +532,7 @@ void Robot::drive(WayPointPtr aGoal)
 
 			    stopOtherRobot();
 
-				if (this->getStop() == true)
+				if (otherRobot->getStop() == true)
 				{
 
 					otherRobot->stopDriving();
