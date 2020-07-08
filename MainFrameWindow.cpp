@@ -437,11 +437,11 @@ void MainFrameWindow::scenario_2_rhs(CommandEvent &UNUSEDPARAM(anEvent))
 }
 void MainFrameWindow::scenario_3_lhs(CommandEvent &UNUSEDPARAM(anEvent))
 {
-	robotWorldCanvas->scenario_3_lhs(6);
+	robotWorldCanvas->scenario_3_lhs(4);
 }
 void MainFrameWindow::scenario_3_rhs(CommandEvent &UNUSEDPARAM(anEvent))
 {
-	robotWorldCanvas->scenario_3_rhs(6);
+	robotWorldCanvas->scenario_3_rhs(4);
 }
 /**
 	 *
